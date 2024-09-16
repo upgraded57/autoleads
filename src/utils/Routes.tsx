@@ -16,6 +16,7 @@ import Text from "@/pages/follow-up/Text";
 import FormWizard from "@/pages/form-wizard/FormWizard";
 import UserForms from "@/pages/user-forms/UserForms";
 import VerifyOtp from "@/pages/auth/VerifyOtp";
+import GuestCampaign from "@/pages/guest/GuestCampaign";
 
 export const Routes = [
   {
@@ -91,5 +92,9 @@ export const Routes = [
   {
     path: "forms/:campaign_id",
     element: <UserForms />,
+  },
+  {
+    path: "guest/campaigns/:campaign_id",
+    element: <GuestCampaign />,
   },
 ];

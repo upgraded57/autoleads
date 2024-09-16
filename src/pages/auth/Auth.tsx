@@ -11,7 +11,7 @@ interface AuthPageProps {
 }
 
 export default function Auth() {
-  const [param, setParam] = useSearchParams();
+  const [param] = useSearchParams();
   const [authState, setAuthState] = useState(param.get("type") || "login");
 
   const AuthPage = ({ setAuthState }: AuthPageProps) => {
