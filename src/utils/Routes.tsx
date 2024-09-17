@@ -21,7 +21,6 @@ import Features from "@/pages/Features/Features";
 import Pricing from "@/pages/Pricing/Pricing";
 import About from "@/pages/About/About";
 import NotFound from "@/pages/NotFound/NotFound";
-import ProtectedRoutes from "./ProtectedRoutes";
 import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
 
 export const Routes = [

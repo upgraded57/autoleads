@@ -90,6 +90,7 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
             <select
               className="bg-transparent outline-none h-10 px-2"
               onChange={(e) => setFilter("type", e.target.value)}
+              defaultValue={q.get("type") ?? ""}
             >
               <option value="">All Types</option>
               <option value="direct">Direct</option>

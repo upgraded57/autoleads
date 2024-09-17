@@ -44,7 +44,6 @@ footer .links .link h5 {
 
 footer .links .link p {
   margin-bottom: 10px;
-  font-size: 16px;
 }
 
 footer .links .link.newsletter span .input {
@@ -65,10 +64,6 @@ footer .copyright {
   margin-top: 50px;
   padding-top: 50px;
   border-top: 2px solid #eff0f6;
-}
-
-footer .copyright p {
-  font-size: 16px;
 }
 
 footer .copyright .social {
