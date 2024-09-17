@@ -1,0 +1,170 @@
+header {
+  width: 100%;
+  padding: 20px 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .logo {
+  flex-basis: 30%;
+  overflow: hidden;
+}
+
+header .logo img {
+  max-width: 205px;
+}
+
+header .logo img {
+  width: 100%;
+}
+
+header nav {
+  flex-basis: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1001;
+}
+
+header nav ul {
+  flex-basis: 60%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header nav ul li a {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  color: #545151;
+  font-size: 16px;
+}
+
+header nav .auth-links {
+  flex-basis: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+header .auth-links button {
+  border-radius: 8px;
+  padding: 10px 30px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+header .auth-links button:first-child {
+  background: transparent;
+}
+
+header .auth-links button:first-child:hover {
+  background: lightgray;
+}
+
+header .auth-links button:last-child {
+  background: var(--pry-clr);
+  color: white;
+}
+
+header .burger {
+  font-size: 30px;
+  display: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.nav-logo {
+  width: 180px;
+  display: none;
+  margin-bottom: 30px;
+}
+
+.nav-logo img {
+  width: 100%;
+}
+
+.nav-close-btn {
+  font-size: 30px;
+  position: absolute;
+  right: 4vw;
+  top: 20px;
+  display: none;
+}
+
+@media screen and (max-width: 980px) {
+  header .burger {
+    display: block;
+  }
+
+  header nav {
+    display: block;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    background: white;
+    overflow: hidden;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: 0.3s;
+    padding: 50px 4vw;
+  }
+
+  header nav.active {
+    transform: scaleX(1);
+  }
+
+  .nav-logo {
+    display: block;
+  }
+
+  .nav-close-btn {
+    display: block;
+  }
+
+  header nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  header nav ul li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  header nav ul li a {
+    text-align: left;
+    width: 100%;
+    padding: 20px;
+  }
+
+  header nav .auth-links {
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  header nav .auth-links button {
+    width: 100%;
+    padding-block: 14px;
+  }
+
+  header nav .auth-links button:first-child {
+    border: 1px solid var(--pry-clr);
+    color: var(--pry-clr);
+  }
+}

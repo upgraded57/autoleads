@@ -6,7 +6,7 @@ import DashboardLinks from "@/layouts/DashboardLinks";
 
 export default function DashboardLayout() {
   return (
-    <div className="flex items-start gap-5 py-3 h-screen overflow-y-hidden">
+    <div className="flex items-start gap-5 py-3 px-5 h-screen overflow-y-hidden">
       <div className="basis-2/12 h-full bg-white rounded-xl p-4">
         <div className="w-[90%] mx-auto mb-10">
           <img src={logo} alt="autoleads" className="w-full" />

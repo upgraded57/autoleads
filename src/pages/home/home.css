@@ -1,0 +1,11 @@
+.home {
+  background: #fafafa;
+  padding-inline: 2vw;
+}
+
+.home-bg {
+  background-image: url("../../assets/herobg.png");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}

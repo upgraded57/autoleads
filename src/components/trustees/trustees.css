@@ -1,0 +1,34 @@
+.trustees {
+  text-align: center;
+  padding-inline: 4vw;
+}
+
+.trustees h1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.trustees-imgs {
+  margin-top: 50px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.trustees-imgs img {
+  max-width: 200px;
+}
+
+@media screen and (max-width: 970px) {
+  .trustees h1 {
+    font-size: 30px;
+  }
+
+  .trustees-imgs {
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+  }
+}

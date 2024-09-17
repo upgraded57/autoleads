@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { createContext, ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 import Loader from "@/components/ui/loader";
 import { useFetchUser } from "@/api/user";
 

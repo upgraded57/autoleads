@@ -1,5 +1,5 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
-import Home from "@/pages/home/Home";
+import Home from "@/pages/Home/Home";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Campaigns from "@/pages/campaigns/Campaigns";
 import User from "@/pages/user/User";
@@ -17,11 +17,29 @@ import FormWizard from "@/pages/form-wizard/FormWizard";
 import UserForms from "@/pages/user-forms/UserForms";
 import VerifyOtp from "@/pages/auth/VerifyOtp";
 import GuestCampaign from "@/pages/guest/GuestCampaign";
+import Features from "@/pages/Features/Features";
+import Pricing from "@/pages/Pricing/Pricing";
+import About from "@/pages/About/About";
+import NotFound from "@/pages/NotFound/NotFound";
+import ProtectedRoutes from "./ProtectedRoutes";
+import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
 
 export const Routes = [
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/features",
+    element: <Features />,
+  },
+  {
+    path: "/pricing",
+    element: <Pricing />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
   {
     path: "/auth",
@@ -70,25 +88,32 @@ export const Routes = [
     ],
   },
   {
-    path: "/campaigns/new",
-    element: <NewCampaign />,
+    path: "/campaigns",
+    element: <RootCampaignsLayout />,
+    children: [
+      {
+        path: "new",
+        element: <NewCampaign />,
+      },
+      {
+        path: "new/:campaign_id",
+        element: <FollowUp />,
+      },
+      {
+        path: "new/:campaign_id/:type/call",
+        element: <Call />,
+      },
+      {
+        path: "new/:campaign_id/:type/text",
+        element: <Text />,
+      },
+      {
+        path: "new/form/:campaign_id/wizard",
+        element: <FormWizard />,
+      },
+    ],
   },
-  {
-    path: "/campaigns/new/:campaign_id",
-    element: <FollowUp />,
-  },
-  {
-    path: "/campaigns/new/:campaign_id/:type/call",
-    element: <Call />,
-  },
-  {
-    path: "/campaigns/new/:campaign_id/:type/text",
-    element: <Text />,
-  },
-  {
-    path: "/campaigns/new/form/:campaign_id/wizard",
-    element: <FormWizard />,
-  },
+
   {
     path: "forms/:campaign_id",
     element: <UserForms />,
@@ -100,5 +125,9 @@ export const Routes = [
   {
     path: "guest/campaigns/:campaign_id/lead/:lead_id",
     element: <Lead type="guest" />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
