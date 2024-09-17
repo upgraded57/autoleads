@@ -7,15 +7,22 @@ import Loader from "@/components/ui/loader";
 import LeadLeft from "./LeadLeft";
 import LeadCenter from "./LeadCenter";
 import LeadRight from "./LeadRight";
+import EmptyState from "@/components/EmptyState";
+import Logo from "@/components/Logo";
 
-export default function Lead() {
+interface LeadProps {
+  type?: string;
+}
+export default function Lead({ type }: LeadProps) {
   const navigate = useNavigate();
   const { lead_id } = useParams();
   const { isLoading, data } = useFetchLeadInfo(lead_id!);
 
   return (
     <>
+      {type === "guest" && <Logo height="small" />}
       <LayoutTop
+        height="short"
         title="Lead Information"
         button={
           <Button
@@ -36,7 +43,7 @@ export default function Lead() {
           <div className="w-full h-[300px] flex items-center justify-center">
             <Loader />
           </div>
-        ) : (
+        ) : data && data.full_name ? (
           <div className="flex items-start gap-5">
             <div className="basis-[35%]  border-[1px] border-gray-200 rounded-lg p-4">
               <LeadLeft lead={data} />
@@ -48,6 +55,8 @@ export default function Lead() {
               <LeadRight lead={data} />
             </div>
           </div>
+        ) : (
+          <EmptyState />
         )}
       </div>
     </>

@@ -1,8 +1,15 @@
 import logoImg from "@/assets/logo-alt.png";
 
-export default function Logo() {
+interface LogoProps {
+  height?: string;
+}
+export default function Logo({ height }: LogoProps) {
   return (
-    <div className="w-full h-[100px] flex items-center">
+    <div
+      className={`w-full ${
+        height === "small" ? "h-[50px]" : "h-[100px]"
+      } flex items-center`}
+    >
       <img src={logoImg} alt="Autoleads logo" className="w-[150px]" />
     </div>
   );

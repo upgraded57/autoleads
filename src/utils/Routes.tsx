@@ -97,4 +97,8 @@ export const Routes = [
     path: "guest/campaigns/:campaign_id",
     element: <GuestCampaign />,
   },
+  {
+    path: "guest/campaigns/:campaign_id/lead/:lead_id",
+    element: <Lead type="guest" />,
+  },
 ];
