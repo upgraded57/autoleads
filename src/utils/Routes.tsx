@@ -1,5 +1,4 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
-import Home from "@/pages/Home/Home";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Campaigns from "@/pages/campaigns/Campaigns";
 import User from "@/pages/user/User";
@@ -22,6 +21,7 @@ import Pricing from "@/pages/Pricing/Pricing";
 import About from "@/pages/About/About";
 import NotFound from "@/pages/NotFound/NotFound";
 import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
+import Home from "@/pages/Home/Home";
 
 export const Routes = [
   {

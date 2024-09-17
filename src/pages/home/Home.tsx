@@ -1,5 +1,5 @@
-import Header from "@/components/header/Header";
 import "./home.css";
+import Header from "@/components/header/Header";
 import Hero from "@/components/hero/Hero";
 import Trustees from "@/components/trustees/Trustees";
 import Offer from "@/components/offer/Offer";
