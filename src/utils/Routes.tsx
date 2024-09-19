@@ -16,12 +16,12 @@ import FormWizard from "@/pages/form-wizard/FormWizard";
 import UserForms from "@/pages/user-forms/UserForms";
 import VerifyOtp from "@/pages/auth/VerifyOtp";
 import GuestCampaign from "@/pages/guest/GuestCampaign";
-import Features from "@/pages/Features/Features";
-import Pricing from "@/pages/Pricing/Pricing";
-import About from "@/pages/About/About";
-import NotFound from "@/pages/NotFound/NotFound";
+import Features from "@/pages/features/Features";
+import Pricing from "@/pages/pricing/Pricing";
+import About from "@/pages/about/About";
+import NotFound from "@/pages/not-found/NotFound";
 import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
-import Home from "@/pages/Home/Home.tsx";
+import Home from "@/pages/home/Home";
 
 export const Routes = [
   {
