@@ -197,7 +197,7 @@ export const useFetchLeadInfo = (lead_id: string) => {
   // fetch lead info
   const fetchLeadInfo = () => {
     return axios({
-      url: `/leads/detail/${lead_id}/`,
+      url: `${baseURL}/leads/detail/${lead_id}/`,
     });
   };
 
