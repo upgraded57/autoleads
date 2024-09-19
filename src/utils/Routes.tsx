@@ -21,7 +21,7 @@ import Pricing from "@/pages/Pricing/Pricing";
 import About from "@/pages/About/About";
 import NotFound from "@/pages/NotFound/NotFound";
 import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
-import Home from "./../pages/Home/Home";
+import Home from "@/pages/Home/Home.tsx";
 
 export const Routes = [
   {
