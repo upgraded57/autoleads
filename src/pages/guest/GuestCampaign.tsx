@@ -81,7 +81,10 @@ export default function GuestCampaign() {
           </div>
 
           <div className="p-4 rounded-2xl bg-white">
-            <CampaignTable data={campaigns?.leads} />
+            <CampaignTable
+              data={campaigns?.leads}
+              campaign_name={campaigns?.campaign_name}
+            />
           </div>
         </>
       )}

@@ -1,4 +1,5 @@
 export interface CampaignsTableProps {
+  campaign_name: string;
   data: {
     call_duration: string | null;
     call_time: string | null;

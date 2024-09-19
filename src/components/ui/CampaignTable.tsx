@@ -12,18 +12,26 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Input } from "./input";
 import { useEffect, useState } from "react";
 import { CampaignsTableProps } from "@/utils/Types.dto";
+import { exportFile } from "@/utils/Export";
 
-export default function CampaignTable({ data }: CampaignsTableProps) {
+const ITEMS_PER_PAGE = 10;
+
+export default function CampaignTable({
+  data,
+  campaign_name,
+}: CampaignsTableProps) {
   const navigate = useNavigate();
 
   const [q, setQ] = useSearchParams({
     status: "",
     value: "",
-    page: "",
+    currentPage: "1", // Ensure default value for pagination
+    itemsPerPage: ITEMS_PER_PAGE.toString(),
   });
 
-  const [leads, setLeads] = useState(data);
+  const [filteredLeads, setFilteredLeads] = useState(data);
 
+  // Function to set filter parameters
   const setFilter = (key: "status" | "value", newValue: string) => {
     const currentParams = Object.fromEntries(q.entries());
     const updatedParams = {
@@ -37,19 +45,11 @@ export default function CampaignTable({ data }: CampaignsTableProps) {
     const filterLeads = () => {
       const filterValue = q.get("status");
       const searchValue = q.get("value");
-      if (!filterValue && !searchValue) {
-        const filteredData = data;
-        setLeads(filteredData);
-        return;
-      }
 
-      const filteredData = data?.filter((el) => {
-        if (searchValue && !filterValue) {
-          return (
-            el.full_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            el.email.toLowerCase().includes(searchValue.toLowerCase())
-          );
-        } else if (filterValue && !searchValue) {
+      let filteredData = data;
+
+      if (filterValue) {
+        filteredData = filteredData.filter((el) => {
           if (
             filterValue.toLowerCase() === "pending" ||
             filterValue.toLowerCase() === "contacted"
@@ -60,22 +60,24 @@ export default function CampaignTable({ data }: CampaignsTableProps) {
               filterValue.toLowerCase() === el.contacted_status.toLowerCase()
             );
           }
-        } else if (searchValue && filterValue) {
-          return (
-            filterValue.toLowerCase() === el.contacted_status.toLowerCase() &&
-            (el.full_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-              el.email.toLowerCase().includes(searchValue.toLowerCase()))
-          );
-        }
-      });
+        });
+      }
 
-      setLeads(filteredData);
+      if (searchValue) {
+        filteredData = filteredData.filter((el) => {
+          return (
+            el.full_name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            el.email.toLowerCase().includes(searchValue.toLowerCase())
+          );
+        });
+      }
+
+      setFilteredLeads(filteredData);
     };
 
     filterLeads();
-  }, [q]);
+  }, [q, data]);
 
-  const ITEMS_PER_PAGE = 10;
   // Read pagination parameters from the URL
   const currentPage = parseInt(q.get("currentPage") || "1", 10);
   const itemsPerPage = parseInt(
@@ -83,16 +85,20 @@ export default function CampaignTable({ data }: CampaignsTableProps) {
     10
   );
 
-  // Calculate the start and end index for slicing the data array
+  // Calculate the start and end index for slicing the filtered data array
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   // Handle page change
-  const handlePageChange = (newPage: any) => {
-    setQ({ currentPage: newPage, itemsPerPage: itemsPerPage.toString() });
+  const handlePageChange = (newPage: number) => {
+    setQ({
+      ...Object.fromEntries(q.entries()),
+      currentPage: newPage.toString(),
+    });
   };
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredLeads.length / itemsPerPage);
 
   return (
     <div>
@@ -124,7 +130,12 @@ export default function CampaignTable({ data }: CampaignsTableProps) {
         </div>
         <div className="basis-1/4 flex items-center justify-end gap-2">
           <Button className="pry-btn">Share</Button>
-          <Button className="pry-btn">Export</Button>
+          <Button
+            className="pry-btn"
+            onClick={() => exportFile(data, campaign_name)}
+          >
+            Export
+          </Button>
         </div>
       </div>
       <Table>
@@ -138,7 +149,7 @@ export default function CampaignTable({ data }: CampaignsTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {leads.slice(startIndex, endIndex).map((lead) => (
+          {filteredLeads.slice(startIndex, endIndex).map((lead) => (
             <TableRow
               key={lead.id}
               onClick={() => navigate(`/app/lead/${lead.id}`)}

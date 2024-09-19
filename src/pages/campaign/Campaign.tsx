@@ -62,7 +62,10 @@ export default function Campaign() {
             <Card title="Total Rejected" qty={rejectedLeads?.length || 0} />
           </div>
           <div className="p-4 rounded-2xl bg-white">
-            <CampaignTable data={data?.leads} />
+            <CampaignTable
+              data={data?.leads}
+              campaign_name={data?.campaign_name}
+            />
           </div>
         </>
       ) : (
