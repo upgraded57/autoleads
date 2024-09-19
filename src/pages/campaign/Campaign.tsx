@@ -1,7 +1,7 @@
 import LayoutTop from "@/components/LayoutTop";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/Card";
-import CampaignTable from "@/components/ui/CampaignTable";
+import CampaignTable from "@/components/CampaignTable";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchCampaign } from "@/api/campaign";
 import Loader from "@/components/ui/loader";
@@ -63,6 +63,7 @@ export default function Campaign() {
           </div>
           <div className="p-4 rounded-2xl bg-white">
             <CampaignTable
+              campaign_id={campaign_id ?? ""}
               data={data?.leads}
               campaign_name={data?.campaign_name}
             />

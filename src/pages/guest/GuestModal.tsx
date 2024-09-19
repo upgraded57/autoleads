@@ -4,10 +4,12 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface GuestModalProps {
@@ -23,14 +25,16 @@ export default function GuestModal({
   setCampaigns,
   campaign_id,
 }: GuestModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const verifyAccessCode = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const accessCode = Object.fromEntries(new FormData(form))
       .access_code as string;
     const toastId = toast.loading("Verifying access code...");
     await axios
-      .get(`${baseURL}/dashboard/${campaign_id}/${JSON.parse(accessCode)}`)
+      .get(`${baseURL}/dashboard/${campaign_id}/${accessCode}`)
       .then((res) => {
         toast.success("Access code verified", { id: toastId });
         setCampaigns(res.data);
@@ -46,7 +50,8 @@ export default function GuestModal({
         }
         toast.error("Something went wrong", { id: toastId });
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -56,11 +61,12 @@ export default function GuestModal({
           <AlertDialogTitle className="text-xl font-semibold">
             Enter Access Code
           </AlertDialogTitle>
-          <p>
-            An access code was sent with the invite mail. Enter it to gain
-            access to view this campaign
-          </p>
         </AlertDialogHeader>
+
+        <AlertDialogDescription>
+          An access code was sent with the invite mail. Enter it to gain access
+          to view this campaign
+        </AlertDialogDescription>
 
         <form onSubmit={verifyAccessCode} className="flex items-center gap-2">
           <Input
@@ -69,7 +75,7 @@ export default function GuestModal({
             name="access_code"
             required
           />
-          <Button type="submit" className="pry-btn">
+          <Button type="submit" className="pry-btn" disabled={isLoading}>
             View Campaign
           </Button>
         </form>

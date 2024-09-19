@@ -6,7 +6,7 @@ import axios from "axios";
 import { baseURL } from "@/api/baseUrl";
 import toast from "react-hot-toast";
 import Card from "@/components/Card";
-import CampaignTable from "@/components/ui/CampaignTable";
+import CampaignTable from "@/components/CampaignTable";
 
 export default function GuestCampaign() {
   const guestVerified = sessionStorage.getItem("guestVerified");
@@ -72,7 +72,7 @@ export default function GuestCampaign() {
       <Logo />
 
       {campaigns?.leads && (
-        <>
+        <div className="px-5">
           <div className="grid grid-cols-4 gap-4 mb-6">
             <Card title="Total Leads" qty={campaigns?.leads?.length || 0} />
             <Card title="Total Called" qty={calledLeads?.length || 0} />
@@ -82,11 +82,12 @@ export default function GuestCampaign() {
 
           <div className="p-4 rounded-2xl bg-white">
             <CampaignTable
+              campaign_id={campaign_id ?? ""}
               data={campaigns?.leads}
               campaign_name={campaigns?.campaign_name}
             />
           </div>
-        </>
+        </div>
       )}
     </>
   );
