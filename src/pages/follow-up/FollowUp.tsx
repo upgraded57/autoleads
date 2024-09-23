@@ -1,7 +1,7 @@
 import { chooseFollowUpOption } from "@/api/campaign";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
@@ -10,10 +10,6 @@ export default function FollowUp() {
   const { campaign_id } = useParams();
   const navigate = useNavigate();
   const type = q.get("type");
-
-  useEffect(() => {
-    if (!campaign_id || !type) return navigate(-1);
-  }, []);
 
   const [methodType, setMethodType] = useState<"Sms" | "CALL" | "">("");
 

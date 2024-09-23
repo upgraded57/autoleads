@@ -1,0 +1,1 @@
+import{j as r,O as t}from"./index-BHPEYUkL.js";import{U as o}from"./UserContext-D0eiQaAi.js";import{P as s}from"./ProtectedRoutes-BU7r_0bP.js";import"./useQuery-BxJrOT0q.js";import"./axiosInstance-D6jcOrH_.js";import"./baseUrl-HwsEoYQ5.js";function x(){return r.jsx("div",{className:"px-5",children:r.jsx(o,{children:r.jsx(s,{children:r.jsx(t,{})})})})}export{x as default};

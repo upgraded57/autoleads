@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import Loader from "@/components/ui/loader";
 import { useFetchUser } from "@/api/user";
+import Loader from "@/components/ui/loader";
 
 interface UserContextType {
   user: any;

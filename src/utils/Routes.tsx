@@ -1,3 +1,4 @@
+import Loader from "@/components/ui/loader";
 import { lazy, Suspense } from "react";
 
 const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"));
@@ -12,8 +13,10 @@ const Campaign = lazy(() => import("@/pages/campaign/Campaign"));
 const Lead = lazy(() => import("@/pages/lead/Lead"));
 const NewCampaign = lazy(() => import("@/pages/new-campaign/NewCampaign"));
 const FollowUp = lazy(() => import("@/pages/follow-up/FollowUp"));
+const TextToSpeech = lazy(() => import("@/pages/follow-up/TextToSpeech"));
 const Call = lazy(() => import("@/pages/follow-up/Call"));
 const Text = lazy(() => import("@/pages/follow-up/Text"));
+const ContentType = lazy(() => import("@/pages/content-type/ContentType"));
 const FormWizard = lazy(() => import("@/pages/form-wizard/FormWizard"));
 const UserForms = lazy(() => import("@/pages/user-forms/UserForms"));
 const VerifyOtp = lazy(() => import("@/pages/auth/VerifyOtp"));
@@ -25,11 +28,19 @@ const NotFound = lazy(() => import("@/pages/not-found/NotFound"));
 const RootCampaignsLayout = lazy(() => import("@/layouts/RootCampaignsLayout"));
 const Home = lazy(() => import("@/pages/home/Home"));
 
+export const SuspenseFallback = () => {
+  return (
+    <div className="w-full h-full min-h-screen flex items-center justify-center">
+      <Loader />
+    </div>
+  );
+};
+
 export const Routes = [
   {
     path: "/",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <Home />
       </Suspense>
     ),
@@ -37,7 +48,7 @@ export const Routes = [
   {
     path: "/features",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <Features />
       </Suspense>
     ),
@@ -45,7 +56,7 @@ export const Routes = [
   {
     path: "/pricing",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <Pricing />
       </Suspense>
     ),
@@ -53,7 +64,7 @@ export const Routes = [
   {
     path: "/about",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <About />
       </Suspense>
     ),
@@ -61,7 +72,7 @@ export const Routes = [
   {
     path: "/auth",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <Auth />
       </Suspense>
     ),
@@ -69,14 +80,18 @@ export const Routes = [
   {
     path: "/auth/verify-otp",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <VerifyOtp />
       </Suspense>
     ),
   },
   {
     path: "/app",
-    element: <DashboardLayout />,
+    element: (
+      <Suspense fallback={<SuspenseFallback />}>
+        <DashboardLayout />
+      </Suspense>
+    ),
     children: [
       {
         path: "dashboard",
@@ -114,7 +129,11 @@ export const Routes = [
   },
   {
     path: "/campaigns",
-    element: <RootCampaignsLayout />,
+    element: (
+      <Suspense fallback={<SuspenseFallback />}>
+        <RootCampaignsLayout />
+      </Suspense>
+    ),
     children: [
       {
         path: "new",
@@ -123,6 +142,14 @@ export const Routes = [
       {
         path: "new/:campaign_id",
         element: <FollowUp />,
+      },
+      {
+        path: "new/:campaign_id/content-type",
+        element: <ContentType />,
+      },
+      {
+        path: "new/:campaign_id/tts/:type/call",
+        element: <TextToSpeech />,
       },
       {
         path: "new/:campaign_id/:type/call",
@@ -142,7 +169,7 @@ export const Routes = [
   {
     path: "forms/:campaign_id",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <UserForms />
       </Suspense>
     ),
@@ -150,7 +177,7 @@ export const Routes = [
   {
     path: "guest/campaigns/:campaign_id",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <GuestCampaign />
       </Suspense>
     ),
@@ -158,7 +185,7 @@ export const Routes = [
   {
     path: "guest/campaigns/:campaign_id/lead/:lead_id",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <Lead type="guest" />
       </Suspense>
     ),
@@ -166,7 +193,7 @@ export const Routes = [
   {
     path: "*",
     element: (
-      <Suspense>
+      <Suspense fallback={<SuspenseFallback />}>
         <NotFound />
       </Suspense>
     ),

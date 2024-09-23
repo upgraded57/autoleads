@@ -3,6 +3,7 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { copyCodeAsInline, copyCodeAsPopup, modalCode } from "@/utils/Codes";
@@ -25,10 +26,10 @@ export function FormCreatedModal({ inviteModalOpen, campaign_id }: modalProps) {
           <AlertDialogTitle className="text-pry-clr text-xl font-semibold">
             View Code
           </AlertDialogTitle>
-          <p>
+          <AlertDialogDescription>
             Copy the code below and paste into your website to display the
             contact form as a popup. Website reload may be required
-          </p>
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="w-full rounded-md border-2 border-gray-200 p-2 h-[100px] overflow-y-scroll text-xs bg-gray-100">
           {codeToCopy}

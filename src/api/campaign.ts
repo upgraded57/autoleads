@@ -105,7 +105,7 @@ export const useFetchCampaigns = () => {
   return useQuery({
     queryKey: ["Campaigns", businessId],
     queryFn: fetchCampaigns,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 };
 
@@ -143,13 +143,38 @@ export const chooseFollowUpOption = async (
     .then(() => {
       toast.success("Follow up method set", { id: toastId });
       navigate(
-        `/campaigns/new/${campaign_id}/${type}/${followUpOption.toLowerCase()}`
+        `/campaigns/new/${campaign_id}/content-type?type=${type}&option=${followUpOption}`
       );
-      // navigate(`/new/${type}/${campaign_id}/follow-up-method/call`);
     })
 
     .catch(() => {
       toast.error("Something went wrong. Please retry", { id: toastId });
+    });
+};
+
+// set campaign content upload type
+export const chooseContentUploadType = async (
+  campaign_id: string | undefined,
+  type: string | null,
+  cType: string,
+  option: string | null,
+  navigate: NavigateFunction
+) => {
+  const toastId = toast.loading("Setting content type", { id: "a" });
+  await axiosInstance
+    .put(`/campaign/content-option/${campaign_id}/`, { content_option: cType })
+    .then(() => {
+      toast.success("Content type set", { id: toastId });
+      cType.toLowerCase() === "audio"
+        ? navigate(
+            `/campaigns/new/${campaign_id}/${type}/${option!.toLowerCase()}`
+          )
+        : navigate(
+            `/campaigns/new/${campaign_id}/tts/${type}/${option!.toLowerCase()}`
+          );
+    })
+    .catch(() => {
+      toast.error("Something went wrong", { id: toastId });
     });
 };
 
@@ -167,6 +192,34 @@ export const addCampaignAudios = async (
       audio_link_1: audios[0],
       audio_link_2: audios[1],
       audio_link_3: audios[2],
+      audio_link_4: audios[3],
+    })
+    .then(() => {
+      toast.success("Audios assigned to calls", { id: toastId });
+      type === "upload" || type === "sheet"
+        ? navigate("/app/campaigns")
+        : navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+    })
+    .catch(() => {
+      toast.error("Something went wrong. Please retry", { id: toastId });
+    });
+};
+
+// add texts to campaign with calls follow up method
+export const addCampaignTexts = async (
+  text: any[],
+  campaign_id: string | undefined,
+  navigate: NavigateFunction,
+  type: string | null
+) => {
+  const toastId = toast.loading("Assigning audios to call");
+
+  await axiosInstance
+    .put(`campaign/call/create/${campaign_id}/`, {
+      text_1: text[0],
+      text_2: text[1],
+      text_3: text[2],
+      text_4: text[3],
     })
     .then(() => {
       toast.success("Audios assigned to calls", { id: toastId });

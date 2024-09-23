@@ -12,10 +12,11 @@ export default function Call() {
   const [audio1Link, setAudio1Link] = useState("");
   const [audio2Link, setAudio2Link] = useState("");
   const [audio3Link, setAudio3Link] = useState("");
+  const [audio4Link, setAudio4Link] = useState("");
 
   const chooseAudioLink = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const audios = [audio1Link, audio2Link, audio3Link];
+    const audios = [audio1Link, audio2Link, audio3Link, audio4Link];
     addCampaignAudios(audios, campaign_id!, navigate, type!);
   };
 
@@ -23,6 +24,7 @@ export default function Call() {
     audio1: false,
     audio2: false,
     audio3: false,
+    audio4: false,
   });
 
   // Create an array or object to store the audio instances
@@ -121,7 +123,7 @@ export default function Call() {
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-2">
                 <Input
                   type="url"
                   placeholder="Link to third audio (if client responds negatively)"
@@ -136,6 +138,25 @@ export default function Call() {
                       className="text-2xl"
                       title="Play Audio"
                       onClick={() => playAudio(3)}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Input
+                  type="url"
+                  placeholder="Callback audio (if client calls back)"
+                  onChange={(e) => setAudio4Link(e.target.value)}
+                  required
+                />
+                <div className="h-full aspect-square cursor-pointer text-pry-clr">
+                  {isLoading.audio4 ? (
+                    <FaSpinner className="loading-icon" />
+                  ) : (
+                    <FaCirclePlay
+                      className="text-2xl"
+                      title="Play Audio"
+                      onClick={() => playAudio(4)}
                     />
                   )}
                 </div>

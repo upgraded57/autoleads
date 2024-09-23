@@ -149,6 +149,18 @@ export const OTPVerify = async (data: {}, navigate: NavigateFunction) => {
     });
 };
 
+export const resendOTP = async (email: string) => {
+  const toastId = toast.loading("Resend OTP", { id: "resendotp" });
+  await axios
+    .post(`${baseURL}/auth/user/resend_activation`, { email })
+    .then(() => {
+      toast.success("OTP resent to your email", { id: toastId });
+    })
+    .catch(() => {
+      toast.error("Cannot resend otp", { id: toastId });
+    });
+};
+
 // export const logout = (navigate) => {
 //   localStorage.clear();
 //   navigate("/auth");

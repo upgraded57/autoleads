@@ -1,0 +1,1 @@
+import{r as e,j as s,g as o}from"./index-BHPEYUkL.js";import{a}from"./UserContext-D0eiQaAi.js";function i({children:r}){var t;return((t=e.useContext(a))==null?void 0:t.user)?r:s.jsx(o,{to:"/auth"})}export{i as P};

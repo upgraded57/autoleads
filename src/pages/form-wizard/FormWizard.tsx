@@ -145,7 +145,10 @@ export default function FormWizard() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something went wrong. Please retry", { id: toastId });
+        toast.error(
+          err.response.data[0] || "Something went wrong. Please retry",
+          { id: toastId }
+        );
       });
   };
 
