@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "@/api/auth";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 interface AuthPageProps {
   setAuthState: Dispatch<SetStateAction<string>>;
@@ -13,6 +14,7 @@ const cn =
 export default function Login({ setAuthState }: AuthPageProps) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const initiateLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,15 +43,23 @@ export default function Login({ setAuthState }: AuthPageProps) {
         </label>
         <label htmlFor="password" className="block w-full">
           <p>Password</p>
-          <Input
-            type="password"
-            minLength={8}
-            name="password"
-            id="password"
-            placeholder="********"
-            required
-            className={cn}
-          />
+          <div className="relative w-full">
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              minLength={8}
+              name="password"
+              id="password"
+              placeholder="********"
+              required
+              className={cn + " w-[90%]"}
+            />
+            <span
+              className="absolute top-1/2 -translate-y-1/2 right-0 cursor-pointer"
+              onClick={() => setPasswordVisible((prev) => !prev)}
+            >
+              {passwordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+            </span>
+          </div>
         </label>
         <Link
           to="/forgot-password"

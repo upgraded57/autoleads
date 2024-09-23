@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "@/api/auth";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 interface AuthPageProps {
   setAuthState: Dispatch<SetStateAction<string>>;
@@ -12,6 +13,7 @@ const cn =
 
 export default function Signup({ setAuthState }: AuthPageProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const createAccount = (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,16 +31,28 @@ export default function Signup({ setAuthState }: AuthPageProps) {
         Sign Up
       </h1>
       <form className=" max-w-[400px] mx-auto w-full" onSubmit={createAccount}>
-        <label htmlFor="name" className="block w-full mb-6">
-          <p>Full Name</p>
-          <Input
-            id="name"
-            name="name"
-            placeholder="e.g John Doe"
-            required
-            className={cn}
-          />
-        </label>
+        <div className="flex gap-2 items-center mb-6">
+          <label htmlFor="first_name">
+            <p>First Name</p>
+            <Input
+              id="first_name"
+              name="first_name"
+              placeholder="e.g John"
+              required
+              className={cn}
+            />
+          </label>
+          <label htmlFor="last_name">
+            <p>Last Name</p>
+            <Input
+              id="last_name"
+              name="last_name"
+              placeholder="e.g Doe"
+              required
+              className={cn}
+            />
+          </label>
+        </div>
         <label htmlFor="business_name" className="block w-full mb-6">
           <p>Business Name</p>
           <Input
@@ -71,27 +85,43 @@ export default function Signup({ setAuthState }: AuthPageProps) {
         </label>
         <label htmlFor="password" className="block w-full mb-6">
           <p>Password</p>
-          <Input
-            type="password"
-            minLength={8}
-            name="password"
-            id="password"
-            placeholder="********"
-            required
-            className={cn}
-          />
+          <div className="relative w-full">
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              minLength={8}
+              name="password"
+              id="password"
+              placeholder="********"
+              required
+              className={cn + " w-[90%]"}
+            />
+            <span
+              className="absolute top-1/2 -translate-y-1/2 right-0 cursor-pointer"
+              onClick={() => setPasswordVisible((prev) => !prev)}
+            >
+              {passwordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+            </span>
+          </div>
         </label>
         <label htmlFor="confirm_password" className="block w-full">
           <p>Confirm Password</p>
-          <Input
-            type="confirm_password"
-            minLength={8}
-            name="confirm_password"
-            id="confirm_password"
-            placeholder="********"
-            required
-            className={cn}
-          />
+          <div className="relative w-full">
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              minLength={8}
+              name="confirm_password"
+              id="confirm_password"
+              placeholder="********"
+              required
+              className={cn + " w-[90%]"}
+            />
+            <span
+              className="absolute top-1/2 -translate-y-1/2 right-0 cursor-pointer"
+              onClick={() => setPasswordVisible((prev) => !prev)}
+            >
+              {passwordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+            </span>
+          </div>
         </label>
         <Link
           to="/forgot-password"
