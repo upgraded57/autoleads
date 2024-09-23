@@ -157,13 +157,8 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                   </Button>
                 ) : (
                   <Popover>
-                    <PopoverTrigger>
-                      <Button
-                        size="icon"
-                        className="h-auto p-2 w-auto text-inherit hover:bg-gray-200"
-                      >
-                        <HiDotsVertical />
-                      </Button>
+                    <PopoverTrigger className="h-auto p-2 w-auto rounded-md text-inherit hover:bg-gray-200">
+                      <HiDotsVertical />
                     </PopoverTrigger>
                     <PopoverContent className="w-auto flex flex-col gap-2">
                       <Button

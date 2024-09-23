@@ -1,52 +1,78 @@
-import DashboardLayout from "@/layouts/DashboardLayout";
-import Dashboard from "@/pages/dashboard/Dashboard";
-import Campaigns from "@/pages/campaigns/Campaigns";
-import User from "@/pages/user/User";
-import Settings from "@/pages/settings/Settings";
-import Support from "@/pages/support/Support";
-import Notifications from "@/pages/notifications/Notifications";
-import Auth from "@/pages/auth/Auth";
-import Campaign from "@/pages/campaign/Campaign";
-import Lead from "@/pages/lead/Lead";
-import NewCampaign from "@/pages/new-campaign/NewCampaign";
-import FollowUp from "@/pages/follow-up/FollowUp";
-import Call from "@/pages/follow-up/Call";
-import Text from "@/pages/follow-up/Text";
-import FormWizard from "@/pages/form-wizard/FormWizard";
-import UserForms from "@/pages/user-forms/UserForms";
-import VerifyOtp from "@/pages/auth/VerifyOtp";
-import GuestCampaign from "@/pages/guest/GuestCampaign";
-import Features from "@/pages/features/Features";
-import Pricing from "@/pages/pricing/Pricing";
-import About from "@/pages/about/About";
-import NotFound from "@/pages/not-found/NotFound";
-import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
-import Home from "@/pages/home/Home";
+import { lazy, Suspense } from "react";
+
+const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"));
+const Dashboard = lazy(() => import("@/pages/dashboard/Dashboard"));
+const Campaigns = lazy(() => import("@/pages/campaigns/Campaigns"));
+const User = lazy(() => import("@/pages/user/User"));
+const Settings = lazy(() => import("@/pages/settings/Settings"));
+const Support = lazy(() => import("@/pages/support/Support"));
+const Notifications = lazy(() => import("@/pages/notifications/Notifications"));
+const Auth = lazy(() => import("@/pages/auth/Auth"));
+const Campaign = lazy(() => import("@/pages/campaign/Campaign"));
+const Lead = lazy(() => import("@/pages/lead/Lead"));
+const NewCampaign = lazy(() => import("@/pages/new-campaign/NewCampaign"));
+const FollowUp = lazy(() => import("@/pages/follow-up/FollowUp"));
+const Call = lazy(() => import("@/pages/follow-up/Call"));
+const Text = lazy(() => import("@/pages/follow-up/Text"));
+const FormWizard = lazy(() => import("@/pages/form-wizard/FormWizard"));
+const UserForms = lazy(() => import("@/pages/user-forms/UserForms"));
+const VerifyOtp = lazy(() => import("@/pages/auth/VerifyOtp"));
+const GuestCampaign = lazy(() => import("@/pages/guest/GuestCampaign"));
+const Features = lazy(() => import("@/pages/features/Features"));
+const Pricing = lazy(() => import("@/pages/pricing/Pricing"));
+const About = lazy(() => import("@/pages/about/About"));
+const NotFound = lazy(() => import("@/pages/not-found/NotFound"));
+const RootCampaignsLayout = lazy(() => import("@/layouts/RootCampaignsLayout"));
+const Home = lazy(() => import("@/pages/home/Home"));
 
 export const Routes = [
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <Suspense>
+        <Home />
+      </Suspense>
+    ),
   },
   {
     path: "/features",
-    element: <Features />,
+    element: (
+      <Suspense>
+        <Features />
+      </Suspense>
+    ),
   },
   {
     path: "/pricing",
-    element: <Pricing />,
+    element: (
+      <Suspense>
+        <Pricing />
+      </Suspense>
+    ),
   },
   {
     path: "/about",
-    element: <About />,
+    element: (
+      <Suspense>
+        <About />
+      </Suspense>
+    ),
   },
   {
     path: "/auth",
-    element: <Auth />,
+    element: (
+      <Suspense>
+        <Auth />
+      </Suspense>
+    ),
   },
   {
     path: "/auth/verify-otp",
-    element: <VerifyOtp />,
+    element: (
+      <Suspense>
+        <VerifyOtp />
+      </Suspense>
+    ),
   },
   {
     path: "/app",
@@ -115,18 +141,34 @@ export const Routes = [
 
   {
     path: "forms/:campaign_id",
-    element: <UserForms />,
+    element: (
+      <Suspense>
+        <UserForms />
+      </Suspense>
+    ),
   },
   {
     path: "guest/campaigns/:campaign_id",
-    element: <GuestCampaign />,
+    element: (
+      <Suspense>
+        <GuestCampaign />
+      </Suspense>
+    ),
   },
   {
     path: "guest/campaigns/:campaign_id/lead/:lead_id",
-    element: <Lead type="guest" />,
+    element: (
+      <Suspense>
+        <Lead type="guest" />
+      </Suspense>
+    ),
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: (
+      <Suspense>
+        <NotFound />
+      </Suspense>
+    ),
   },
 ];
