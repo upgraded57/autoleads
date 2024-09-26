@@ -19,19 +19,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-interface CampaignsTableProps {
-  data: {
-    converted: number;
-    created: string;
-    id: string;
-    leads: number;
-    title: string;
-    type_of: string;
-  }[];
-}
+import { CampaignsTableProps } from "@/utils/Types.dto";
 
 export default function CampaignsTable({ data }: CampaignsTableProps) {
+  console.log(data[0]);
   const [q, setQ] = useSearchParams({
     type: "",
     value: "",
@@ -140,10 +131,10 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                 {campaign.type_of}
               </TableCell>
               <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.converted}
+                {campaign.contacted_leads}
               </TableCell>
               <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.converted}
+                {campaign.converted_leads}
               </TableCell>
               <TableCell>
                 {campaign.type_of.toLowerCase() === "upload" ? (

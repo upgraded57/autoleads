@@ -1,4 +1,17 @@
 export interface CampaignsTableProps {
+  data: {
+    converted: number;
+    created: string;
+    id: string;
+    leads: number;
+    title: string;
+    type_of: string;
+    contacted_leads: string;
+    converted_leads: string;
+  }[];
+}
+
+export interface CampaignTableProps {
   campaign_name: string;
   campaign_id: string;
   data: {
@@ -42,6 +55,7 @@ export interface DashboardTableProps {
     phone_number: string;
     recording_url: string;
     status: string;
+    campaign_name: string;
   }[];
   year: string;
 }

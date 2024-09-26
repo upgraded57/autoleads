@@ -13,7 +13,7 @@ interface FollowUpChartprops {
   year: string;
 }
 export default function FollowUpChart({ year }: FollowUpChartprops) {
-  const { leads } = dashboardData();
+  const { leads } = dashboardData({ year });
 
   const yearLeads = leads.filter(
     (lead: any) => moment(lead.created).format("YYYY") === year

@@ -22,10 +22,11 @@ export default function Dashboard() {
     user,
     isLoading,
     leads,
+    yearLeads,
     reachedLeads,
     convertedLeads,
     rejectedLeads,
-  } = dashboardData();
+  } = dashboardData({ year });
 
   if (isLoading)
     return (
@@ -63,7 +64,7 @@ export default function Dashboard() {
         </div>
 
         <div className="flex gap-4">
-          <Card title="Total Leads" qty={leads?.length || 0} />
+          <Card title="Total Leads" qty={yearLeads?.length || 0} />
           <Card title="Total Leads Reached" qty={reachedLeads?.length || 0} />
           <Card title="Total Positive" qty={convertedLeads?.length || 0} />
           <Card title="Total Negative" qty={rejectedLeads?.length || 0} />

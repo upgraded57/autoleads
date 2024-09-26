@@ -11,7 +11,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Input } from "./ui/input";
 import { useEffect, useState } from "react";
-import { CampaignsTableProps } from "@/utils/Types.dto";
+import { CampaignTableProps } from "@/utils/Types.dto";
 import { exportFile } from "@/utils/Export";
 import { CampaignShareModal } from "./CampaignShareModal";
 
@@ -21,7 +21,7 @@ export default function CampaignTable({
   data,
   campaign_id,
   campaign_name,
-}: CampaignsTableProps) {
+}: CampaignTableProps) {
   const navigate = useNavigate();
 
   const [q, setQ] = useSearchParams({

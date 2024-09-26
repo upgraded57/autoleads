@@ -167,6 +167,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
               <TableRow>
                 <TableHead>Full Name</TableHead>
                 <TableHead>Email Address</TableHead>
+                <TableHead>Campaign Name</TableHead>
                 <TableHead>Phone Number</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Feedback</TableHead>
@@ -180,6 +181,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
                 >
                   <TableCell>{lead.full_name}</TableCell>
                   <TableCell>{lead.email}</TableCell>
+                  <TableCell>{lead.campaign_name}</TableCell>
                   <TableCell>{lead.phone_number}</TableCell>
                   <TableCell>
                     <span
