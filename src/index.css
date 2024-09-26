@@ -178,6 +178,7 @@ p {
   --neutral-dark-clr: rgba(47, 47, 47, 1);
   --grey: rgba(248, 248, 248, 1);
   --text-clr: rgba(84, 81, 81, 1);
+  --red-clr: rgba(235, 87, 87, 1);
   --yellow-clr: #f2c94c;
   --green-clr: #6fcf97;
 }

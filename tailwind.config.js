@@ -27,6 +27,7 @@ export default {
         "neutral-dark-clr": "var(--neutral-dark-clr)",
         "grey-clr": "var(--grey-clr)",
         "text-clr": "var(--text-clr)",
+        "red-clr": "var(--red-clr)",
         "yellow-clr": "var(--yellow-clr)",
         "green-clr": "var(--green-clr)",
         background: "hsl(var(--background))",

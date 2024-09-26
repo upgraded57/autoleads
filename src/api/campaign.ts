@@ -260,3 +260,18 @@ export const useFetchLeadInfo = (lead_id: string) => {
     select: (data) => data.data,
   });
 };
+
+// Fetch dashboard leads
+export const useFetchDashboardLeads = () => {
+  const business = localStorage.getItem("business_id") || "";
+  const businessId = JSON.parse(business);
+  const fetchDashboardLeads = () => {
+    return axiosInstance.get(`/business/leads/${businessId}`);
+  };
+
+  return useQuery({
+    queryKey: ["Dashboard Leads", businessId],
+    queryFn: fetchDashboardLeads,
+    select: (data) => data.data,
+  });
+};

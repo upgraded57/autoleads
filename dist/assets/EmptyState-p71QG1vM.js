@@ -1,1 +1,0 @@
-import{j as e}from"./index-BHPEYUkL.js";import{a as t}from"./index-D9SJB1D9.js";function n(){return e.jsxs("div",{className:"w-full h-[400px] bg-white rounded-2xl flex items-center justify-center flex-col gap-5",children:[e.jsx(t,{className:"text-[100px] text-gray-300"}),e.jsx("p",{children:"There's nothing here yet"})]})}export{n as E};

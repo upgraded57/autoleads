@@ -7,7 +7,6 @@ import { Navigate, useParams } from "react-router-dom";
 import { FaTriangleExclamation } from "react-icons/fa6";
 export default function UserForms() {
   const { campaign_id } = useParams();
-  console.log(campaign_id);
 
   useEffect(() => {
     if (!campaign_id) <Navigate to="/auth" />;
@@ -24,9 +23,8 @@ export default function UserForms() {
           setError(false);
           setFormData(JSON.parse(res.data.design));
         })
-        .catch((err) => {
+        .catch(() => {
           setError(true);
-          console.log(err);
         });
     };
 

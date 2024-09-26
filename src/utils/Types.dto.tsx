@@ -29,3 +29,19 @@ export interface LeadProps {
     status: string;
   };
 }
+
+export interface DashboardTableProps {
+  data: {
+    call_duration: string;
+    call_time: string;
+    contacted_status: string;
+    created: string;
+    email: string;
+    full_name: string;
+    id: string;
+    phone_number: string;
+    recording_url: string;
+    status: string;
+  }[];
+  year: string;
+}

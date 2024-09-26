@@ -55,15 +55,16 @@ export default function DashboardLinks() {
       {navLinks.map((link, idx) => (
         <NavLink
           to={link.path}
-          className={`navLinks rounded-md transition-all flex items-center gap-2 w-full p-2 mb-2 ${
+          title={link.title}
+          className={`navLinks rounded-md transition-all flex items-center justify-center lg:justify-start gap-2 w-full p-2 mb-2 ${
             link.title.toLowerCase() === "settings" && "mt-10"
           } ${
             link.title.toLowerCase() === "logout" && "mt-10"
-          } hover:text-pry-clr hover:translate-x-2`}
+          } hover:text-pry-clr lg:hover:translate-x-2`}
           key={idx}
         >
           <span>{link.icon}</span>
-          <p className="text-[16px]">{link.title}</p>
+          <p className="text-[16px] hidden lg:block">{link.title}</p>
         </NavLink>
       ))}
     </div>

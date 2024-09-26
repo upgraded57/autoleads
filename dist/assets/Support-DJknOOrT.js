@@ -1,0 +1,1 @@
+import{j as t}from"./index-DdhJ41Kh.js";import{L as r}from"./LayoutTop-JTYiaKbl.js";function p(){return t.jsx(t.Fragment,{children:t.jsx(r,{title:"Support",subtitle:"Get support, report problems and make suggestions"})})}export{p as default};
