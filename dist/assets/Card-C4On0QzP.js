@@ -1,1 +1,0 @@
-import{j as e}from"./index-DdhJ41Kh.js";function s({title:t,qty:l}){return e.jsxs("div",{className:"w-full p-4 rounded-2xl bg-accent-clr flex flex-col gap-4 text-white",children:[e.jsx("p",{children:t}),e.jsx("h1",{className:"text-header text-3xl font-semibold",children:l})]})}export{s as C};
