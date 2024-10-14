@@ -2,13 +2,12 @@ import { addCampaignTexts } from "@/api/campaign";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function TextToSpeech() {
   const navigate = useNavigate();
   const { campaign_id } = useParams();
-  const [q] = useSearchParams();
-  const type = q.get("type");
+  const { type } = useParams();
 
   const chooseTTS = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +16,7 @@ export default function TextToSpeech() {
     const texts = [data.text1, data.text2, data.text3, data.text4];
     addCampaignTexts(texts, campaign_id, navigate, type);
   };
+
   return (
     <>
       <Logo />

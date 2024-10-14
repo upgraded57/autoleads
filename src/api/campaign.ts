@@ -210,7 +210,7 @@ export const addCampaignTexts = async (
   text: any[],
   campaign_id: string | undefined,
   navigate: NavigateFunction,
-  type: string | null
+  type: string | undefined
 ) => {
   const toastId = toast.loading("Assigning audios to call");
 
@@ -272,6 +272,21 @@ export const useFetchDashboardLeads = () => {
   return useQuery({
     queryKey: ["Dashboard Leads", businessId],
     queryFn: fetchDashboardLeads,
+    select: (data) => data.data,
+  });
+};
+
+export const useFetchLogs = () => {
+  const business = localStorage.getItem("business_id") || "";
+  const businessId = JSON.parse(business);
+
+  const fetchLogs = () => {
+    return axiosInstance.get(`/business/${businessId}/logs/`);
+  };
+
+  return useQuery({
+    queryKey: ["Logs", businessId],
+    queryFn: fetchLogs,
     select: (data) => data.data,
   });
 };

@@ -1,1 +1,0 @@
-import{r as e,j as s,i as o}from"./index-BTCpIiPF.js";import{a}from"./UserContext-D59ew-rR.js";function x({children:r}){var t;return((t=e.useContext(a))==null?void 0:t.user)?r:s.jsx(o,{to:"/auth"})}export{x as P};

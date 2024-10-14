@@ -1,1 +1,0 @@
-import{a,b as t}from"./baseUrl-HwsEoYQ5.js";const r=a.create({baseURL:t});r.interceptors.request.use(e=>{const s=localStorage.getItem("tokens");return s&&(e.headers.Authorization=`Bearer ${JSON.parse(s).access}`),e});export{r as a};

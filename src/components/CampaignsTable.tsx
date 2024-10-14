@@ -22,7 +22,6 @@ import {
 import { CampaignsTableProps } from "@/utils/Types.dto";
 
 export default function CampaignsTable({ data }: CampaignsTableProps) {
-  console.log(data[0]);
   const [q, setQ] = useSearchParams({
     type: "",
     value: "",

@@ -1,1 +1,0 @@
-import{j as s,b as o}from"./index-BTCpIiPF.js";import{l as a}from"./logo-alt-DamHNGlx.js";function m({height:l}){return s.jsx("div",{className:`w-full ${l==="small"?"h-[50px]":"h-[100px]"} flex items-center`,children:s.jsx(o,{to:`${l==="small"?"#":"/app/dashboard"}`,children:s.jsx("img",{src:a,alt:"Autoleads logo",className:"w-[150px]"})})})}export{m as L};

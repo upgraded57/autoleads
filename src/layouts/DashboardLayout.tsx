@@ -4,6 +4,8 @@ import ProtectedRoutes from "../utils/ProtectedRoutes";
 import logo from "@/assets/logo-alt.png";
 import logoSm from "@/assets/logo-sm.png";
 import DashboardLinks from "@/layouts/DashboardLinks";
+import { Suspense } from "react";
+import { SuspenseFallback } from "@/utils/Routes";
 
 export default function DashboardLayout() {
   return (
@@ -18,7 +20,9 @@ export default function DashboardLayout() {
       <div className="flex-1 h-full overflow-y-scroll pr-2">
         <UserProvider>
           <ProtectedRoutes>
-            <Outlet />
+            <Suspense fallback={<SuspenseFallback />}>
+              <Outlet />
+            </Suspense>
           </ProtectedRoutes>
         </UserProvider>
       </div>

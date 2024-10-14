@@ -21,6 +21,7 @@ export default function CampaignTable({
   data,
   campaign_id,
   campaign_name,
+  guest,
 }: CampaignTableProps) {
   const navigate = useNavigate();
 
@@ -163,7 +164,14 @@ export default function CampaignTable({
             {filteredLeads.slice(startIndex, endIndex).map((lead) => (
               <TableRow
                 key={lead.id}
-                onClick={() => navigate(`/app/lead/${lead.id}`)}
+                onClick={
+                  guest
+                    ? () =>
+                        navigate(
+                          `/guest/campaigns/${campaign_id}/lead/${lead.id}`
+                        )
+                    : () => navigate(`/app/lead/${lead.id}`)
+                }
               >
                 <TableCell>{lead.full_name}</TableCell>
                 <TableCell>{lead.email}</TableCell>

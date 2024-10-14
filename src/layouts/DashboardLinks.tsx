@@ -47,6 +47,9 @@ export default function DashboardLinks() {
       title: "Logout",
       path: "/auth",
       icon: <BsBoxArrowLeft />,
+      onClick: () => {
+        localStorage.clear();
+      },
     },
   ];
 
@@ -54,6 +57,7 @@ export default function DashboardLinks() {
     <div className="w-full">
       {navLinks.map((link, idx) => (
         <NavLink
+          onClick={link.onClick}
           to={link.path}
           title={link.title}
           className={`navLinks rounded-md transition-all flex items-center justify-center lg:justify-start gap-2 w-full p-2 mb-2 ${

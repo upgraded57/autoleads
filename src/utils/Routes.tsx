@@ -1,7 +1,8 @@
 import Loader from "@/components/ui/loader";
 import { lazy, Suspense } from "react";
 
-const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"));
+import DashboardLayout from "@/layouts/DashboardLayout";
+import Index from "@/pages/home/Index";
 const Dashboard = lazy(() => import("@/pages/dashboard/Dashboard"));
 const Campaigns = lazy(() => import("@/pages/campaigns/Campaigns"));
 const User = lazy(() => import("@/pages/user/User"));
@@ -25,7 +26,9 @@ const Features = lazy(() => import("@/pages/features/Features"));
 const Pricing = lazy(() => import("@/pages/pricing/Pricing"));
 const About = lazy(() => import("@/pages/about/About"));
 const NotFound = lazy(() => import("@/pages/not-found/NotFound"));
-const RootCampaignsLayout = lazy(() => import("@/layouts/RootCampaignsLayout"));
+import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
+import GuestLayout from "@/pages/guest/GuestLayout";
+import GuestLead from "@/pages/guest/GuestLead";
 const Home = lazy(() => import("@/pages/home/Home"));
 
 export const SuspenseFallback = () => {
@@ -39,59 +42,38 @@ export const SuspenseFallback = () => {
 export const Routes = [
   {
     path: "/",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <Home />
-      </Suspense>
-    ),
+    element: <Index />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/features",
+        element: <Features />,
+      },
+      {
+        path: "/pricing",
+        element: <Pricing />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/auth",
+        element: <Auth />,
+      },
+      {
+        path: "/auth/verify-otp",
+        element: <VerifyOtp />,
+      },
+    ],
   },
-  {
-    path: "/features",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <Features />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/pricing",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <Pricing />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <About />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/auth",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <Auth />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/auth/verify-otp",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <VerifyOtp />
-      </Suspense>
-    ),
-  },
+
   {
     path: "/app",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <DashboardLayout />
-      </Suspense>
-    ),
+    element: <DashboardLayout />,
     children: [
       {
         path: "dashboard",
@@ -129,11 +111,7 @@ export const Routes = [
   },
   {
     path: "/campaigns",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <RootCampaignsLayout />
-      </Suspense>
-    ),
+    element: <RootCampaignsLayout />,
     children: [
       {
         path: "new",
@@ -175,21 +153,20 @@ export const Routes = [
     ),
   },
   {
-    path: "guest/campaigns/:campaign_id",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <GuestCampaign />
-      </Suspense>
-    ),
+    path: "/guest",
+    element: <GuestLayout />,
+    children: [
+      {
+        path: "campaigns/:campaign_id",
+        element: <GuestCampaign />,
+      },
+      {
+        path: "campaigns/:campaign_id/lead/:lead_id",
+        element: <GuestLead />,
+      },
+    ],
   },
-  {
-    path: "guest/campaigns/:campaign_id/lead/:lead_id",
-    element: (
-      <Suspense fallback={<SuspenseFallback />}>
-        <Lead type="guest" />
-      </Suspense>
-    ),
-  },
+
   {
     path: "*",
     element: (

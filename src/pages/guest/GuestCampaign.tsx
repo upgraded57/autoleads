@@ -7,6 +7,7 @@ import { baseURL } from "@/api/baseUrl";
 import toast from "react-hot-toast";
 import Card from "@/components/Card";
 import CampaignTable from "@/components/CampaignTable";
+import { SuspenseFallback } from "@/utils/Routes";
 
 export default function GuestCampaign() {
   const guestVerified = sessionStorage.getItem("guestVerified");
@@ -16,8 +17,10 @@ export default function GuestCampaign() {
   );
 
   const [campaigns, setCampaigns] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const verifyAccessCode = async () => {
+    setIsLoading(true);
     const accessCode = sessionStorage.getItem("access_code");
     if (!accessCode) return setModalActive(true);
     await axios
@@ -32,6 +35,9 @@ export default function GuestCampaign() {
           return toast.error("Access denied. Access code invalid");
         }
         toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -69,26 +75,36 @@ export default function GuestCampaign() {
           campaign_id={campaign_id!}
         />
       )}
-      <Logo />
+      <div className="px-[4vw] pb-10">
+        <Logo />
 
-      {campaigns?.leads && (
-        <div className="px-5">
-          <div className="grid grid-cols-4 gap-4 mb-6">
-            <Card title="Total Leads" qty={campaigns?.leads?.length || 0} />
-            <Card title="Total Called" qty={calledLeads?.length || 0} />
-            <Card title="Total Qualified" qty={qualifiedLeads?.length || 0} />
-            <Card title="Total Rejected" qty={rejectedLeads?.length || 0} />
-          </div>
+        {isLoading ? (
+          <SuspenseFallback />
+        ) : (
+          campaigns?.leads && (
+            <div className="mt-10">
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                <Card title="Total Leads" qty={campaigns?.leads?.length || 0} />
+                <Card title="Total Called" qty={calledLeads?.length || 0} />
+                <Card
+                  title="Total Qualified"
+                  qty={qualifiedLeads?.length || 0}
+                />
+                <Card title="Total Rejected" qty={rejectedLeads?.length || 0} />
+              </div>
 
-          <div className="p-4 rounded-2xl bg-white">
-            <CampaignTable
-              campaign_id={campaign_id ?? ""}
-              data={campaigns?.leads}
-              campaign_name={campaigns?.campaign_name}
-            />
-          </div>
-        </div>
-      )}
+              <div className="p-4 rounded-2xl bg-white">
+                <CampaignTable
+                  guest={true}
+                  campaign_id={campaign_id ?? ""}
+                  data={campaigns?.leads}
+                  campaign_name={campaigns?.campaign_name}
+                />
+              </div>
+            </div>
+          )
+        )}
+      </div>
     </>
   );
 }

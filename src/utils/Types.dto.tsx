@@ -14,6 +14,7 @@ export interface CampaignsTableProps {
 export interface CampaignTableProps {
   campaign_name: string;
   campaign_id: string;
+  guest?: boolean;
   data: {
     call_duration: string | null;
     call_time: string | null;

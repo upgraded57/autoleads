@@ -8,19 +8,14 @@ import LeadLeft from "./LeadLeft";
 import LeadCenter from "./LeadCenter";
 import LeadRight from "./LeadRight";
 import EmptyState from "@/components/EmptyState";
-import Logo from "@/components/Logo";
 
-interface LeadProps {
-  type?: string;
-}
-export default function Lead({ type }: LeadProps) {
+export default function Lead() {
   const navigate = useNavigate();
   const { lead_id } = useParams();
   const { isLoading, data } = useFetchLeadInfo(lead_id!);
 
   return (
     <>
-      {type === "guest" && <Logo height="small" />}
       <LayoutTop
         height="short"
         title="Lead Information"
