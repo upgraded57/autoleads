@@ -155,12 +155,12 @@ export default function FormWizard() {
   return (
     <>
       <Logo />
-      {modalActive && (
+      {
         <FormCreatedModal
           inviteModalOpen={modalActive}
           campaign_id={campaign_id!}
         />
-      )}
+      }
       <div className="flex items-center justify-between">
         <h1 className="text-header text-2xl font-semibold">
           Customize your form

@@ -1,21 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { InviteModal } from "./InviteModal";
-import { FaPlus } from "react-icons/fa6";
 import UsersTable from "./UsersTable";
-import Permission from "./Permission";
+import { useFetchRoles } from "@/api/campaign";
+import Loader from "@/components/ui/loader";
 
 export default function Roles() {
-  const [inviteModalOpen, setInviteModalOpen] = useState(false);
+  const { isLoading, data: users } = useFetchRoles();
+  if (isLoading)
+    return (
+      <div className="w-full h-[200px] py-10 flex items-center justify-center bg-white rounded-2xl">
+        <Loader />
+      </div>
+    );
   return (
     <>
       <div className="rounded-2xl bg-white p-4 mb-6">
-        {inviteModalOpen && (
-          <InviteModal
-            inviteModalOpen={inviteModalOpen}
-            setInviteModalOpen={setInviteModalOpen}
-          />
-        )}
         <div className="flex justify-between items-center mb-6">
           <span>
             <h3 className="font-semibold text-lg">Team Overview</h3>
@@ -24,22 +21,21 @@ export default function Roles() {
               platform
             </p>
           </span>
-          <Button
-            className="pry-btn gap-2"
-            onClick={() => setInviteModalOpen(true)}
-          >
-            <FaPlus />
-            Invite or Add User
-          </Button>
+          <div>
+            <div className="flex gap-2 items-center">
+              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+              <p className="text-xs">Access Granted</p>
+            </div>
+            <div className="flex gap-2 items-center">
+              <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+              <p className="text-xs">Access Revoked</p>
+            </div>
+          </div>
         </div>
 
         <div>
-          <UsersTable />
+          <UsersTable users={users} />
         </div>
-      </div>
-
-      <div className="rounded-2xl bg-white p-4">
-        <Permission />
       </div>
     </>
   );

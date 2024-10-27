@@ -1,6 +1,6 @@
 interface LayoutTopProps {
-  title: String;
-  subtitle?: String;
+  title: string;
+  subtitle?: string;
   height?: string;
   button?: any;
 }

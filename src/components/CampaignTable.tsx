@@ -231,13 +231,13 @@ export default function CampaignTable({
           </Button>
         </div>
       </div>
-      {inviteModalOpen && (
+      {
         <CampaignShareModal
           campaign_id={campaign_id}
           inviteModalOpen={inviteModalOpen}
           setInviteModalOpen={setInviteModalOpen}
         />
-      )}
+      }
     </>
   );
 }

@@ -37,16 +37,24 @@ export default function FollowUp() {
             </p>
             <hr className="my-2" />
             <form onSubmit={chooseFollowUp}>
-              <label htmlFor="text" className="flex gap-2 items-center mb-2">
+              <label
+                htmlFor="text"
+                className="flex gap-2 items-center mb-2 cursor-not-allowed"
+                title="WhatsApp follow up method is coming soon"
+              >
                 <input
                   type="radio"
                   name="method"
                   id="text"
+                  disabled
                   onChange={() => setMethodType("Sms")}
                 />
-                <p>Text Message</p>
+                <p>Whatsapp Message (Coming Soon)</p>
               </label>
-              <label htmlFor="call" className="flex gap-2 items-center mb-2">
+              <label
+                htmlFor="call"
+                className="flex gap-2 items-center mb-2 cursor-pointer"
+              >
                 <input
                   type="radio"
                   name="method"

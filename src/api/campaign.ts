@@ -290,3 +290,18 @@ export const useFetchLogs = () => {
     select: (data) => data.data,
   });
 };
+
+export const useFetchRoles = () => {
+  const business = localStorage.getItem("business_id") || "";
+  const businessId = JSON.parse(business);
+
+  const fetchRoles = () => {
+    return axiosInstance.get(`/business/${businessId}/invited-users/`);
+  };
+
+  return useQuery({
+    queryKey: ["Roles", businessId],
+    queryFn: fetchRoles,
+    select: (data) => data.data,
+  });
+};

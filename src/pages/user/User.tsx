@@ -64,7 +64,7 @@ export default function User() {
               <p>This will be displayed on your Profile</p>
             </span>
             <span>
-              <Input type="email" placeholder="mail email address" />
+              <Input type="email" placeholder="email address" />
             </span>
           </div>
         </div>

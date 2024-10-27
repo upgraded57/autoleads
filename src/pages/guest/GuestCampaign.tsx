@@ -67,14 +67,14 @@ export default function GuestCampaign() {
 
   return (
     <>
-      {modalActive && (
+      {
         <GuestModal
           modalActive={modalActive}
           setModalActive={setModalActive}
           setCampaigns={setCampaigns}
           campaign_id={campaign_id!}
         />
-      )}
+      }
       <div className="px-[4vw] pb-10">
         <Logo />
 
