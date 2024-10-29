@@ -17,6 +17,7 @@ import {
 import toast from "react-hot-toast";
 import { axiosInstance } from "@/api/axiosInstance";
 import { useQueryClient } from "@tanstack/react-query";
+import EmptyState from "@/components/EmptyState";
 
 interface UserProps {
   users: {
@@ -59,7 +60,7 @@ export default function UsersTable({ users }: UserProps) {
         toast.error("Something went wrong. Please retry", { id: toastId });
       });
   };
-  return (
+  return users?.length > 0 ? (
     <Table>
       <TableHeader>
         <TableRow>
@@ -116,5 +117,7 @@ export default function UsersTable({ users }: UserProps) {
         ))}
       </TableBody>
     </Table>
+  ) : (
+    <EmptyState />
   );
 }
