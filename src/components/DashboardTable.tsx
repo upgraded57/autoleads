@@ -20,7 +20,7 @@ const ITEMS_PER_PAGE = 10;
 export default function DashboardTable({ data, year }: DashboardTableProps) {
   const [yearData, setYearData] = useState(data);
   useEffect(() => {
-    const newYearData = data.filter(
+    const newYearData = data?.filter(
       (el) => moment(el.created).format("YYYY") === year
     );
     setYearData(newYearData);
@@ -55,7 +55,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
       let filteredData = yearData;
 
       if (filterValue) {
-        filteredData = filteredData.filter((el) => {
+        filteredData = filteredData?.filter((el) => {
           if (
             filterValue.toLowerCase() === "pending" ||
             filterValue.toLowerCase() === "contacted"
@@ -70,7 +70,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
       }
 
       if (searchValue) {
-        filteredData = filteredData.filter((el) => {
+        filteredData = filteredData?.filter((el) => {
           return (
             el.full_name.toLowerCase().includes(searchValue.toLowerCase()) ||
             el.email.toLowerCase().includes(searchValue.toLowerCase())
@@ -104,7 +104,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
   };
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(filteredLeads.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredLeads?.length / itemsPerPage);
 
   return (
     <>
@@ -154,14 +154,14 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
               size="xs"
               title="Next Page"
               variant="secondary"
-              disabled={endIndex >= yearData.length}
+              disabled={endIndex >= yearData?.length}
               onClick={() => handlePageChange(currentPage + 1)}
             >
               <FaChevronRight />
             </Button>
           </div>
         </div>
-        {filteredLeads.length > 0 ? (
+        {filteredLeads?.length > 0 ? (
           <Table>
             <TableHeader>
               <TableRow>

@@ -15,272 +15,309 @@ interface FollowUpChartprops {
 export default function FollowUpChart({ year }: FollowUpChartprops) {
   const { leads } = dashboardData({ year });
 
-  const yearLeads = leads.filter(
+  const yearLeads = leads?.filter(
     (lead: any) => moment(lead.created).format("YYYY") === year
   );
 
-  const janLeads = yearLeads.filter(
+  const janLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "jan"
   );
 
-  const febLeads = yearLeads.filter(
+  const febLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "feb"
   );
 
-  const marLeads = yearLeads.filter(
+  const marLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "mar"
   );
 
-  const aprLeads = yearLeads.filter(
+  const aprLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "apr"
   );
 
-  const mayLeads = yearLeads.filter(
+  const mayLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "may"
   );
 
-  const junLeads = yearLeads.filter(
+  const junLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "jun"
   );
 
-  const julLeads = yearLeads.filter(
+  const julLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "jul"
   );
 
-  const augLeads = yearLeads.filter(
+  const augLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "aug"
   );
 
-  const sepLeads = yearLeads.filter(
+  const sepLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "sep"
   );
 
-  const octLeads = yearLeads.filter(
+  const octLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "oct"
   );
 
-  const novLeads = yearLeads.filter(
+  const novLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "nov"
   );
 
-  const decLeads = yearLeads.filter(
+  const decLeads = yearLeads?.filter(
     (lead: any) => moment(lead.created).format("MMM").toLowerCase() === "dec"
   );
 
   const chartData = [
     {
       month: "January",
-      contacted: parseInt(
-        janLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        janLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        janLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          janLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          janLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          janLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "February",
-      contacted: parseInt(
-        febLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        febLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        febLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          febLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          febLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          febLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "March",
-      contacted: parseInt(
-        marLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        marLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        marLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          marLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          marLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          marLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "April",
-      contacted: parseInt(
-        aprLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        aprLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          aprLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          aprLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
       rejected: parseInt(
-        aprLeads.filter(
+        aprLeads?.filter(
           (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
         ).length
       ),
     },
     {
       month: "May",
-      contacted: parseInt(
-        mayLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        mayLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        mayLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          mayLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          mayLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          mayLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "June",
-      contacted: parseInt(
-        junLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        junLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        junLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          junLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          junLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          junLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "July",
-      contacted: parseInt(
-        julLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        julLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        julLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          julLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          julLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          julLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "August",
-      contacted: parseInt(
-        augLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        augLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        augLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          augLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          augLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          augLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "September",
-      contacted: parseInt(
-        sepLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        sepLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        sepLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          sepLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          sepLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          sepLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "October",
-      contacted: parseInt(
-        octLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        octLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: octLeads.filter(
-        (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-      ).length,
+      contacted:
+        parseInt(
+          octLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          octLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          octLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "November",
-      novtacted: parseInt(
-        janLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        novLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        novLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      novtacted:
+        parseInt(
+          janLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          novLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          novLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
     {
       month: "December",
-      contacted: parseInt(
-        decLeads.filter(
-          (lead: any) => lead.status.toLowerCase() === "contacted"
-        ).length
-      ),
-      converted: parseInt(
-        decLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "converted"
-        ).length
-      ),
-      rejected: parseInt(
-        decLeads.filter(
-          (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
-        ).length
-      ),
+      contacted:
+        parseInt(
+          decLeads?.filter(
+            (lead: any) => lead.status.toLowerCase() === "contacted"
+          ).length
+        ) || 0,
+      converted:
+        parseInt(
+          decLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "converted"
+          ).length
+        ) || 0,
+      rejected:
+        parseInt(
+          decLeads?.filter(
+            (lead: any) => lead.contacted_status.toLowerCase() === "rejected"
+          ).length
+        ) || 0,
     },
   ];
 
