@@ -1,1 +1,0 @@
-import{j as t,l as r}from"./index-BYm0heM1.js";function o(){return t.jsx(t.Fragment,{children:t.jsx(r,{title:"Support",subtitle:"Get support, report problems and make suggestions"})})}export{o as default};
