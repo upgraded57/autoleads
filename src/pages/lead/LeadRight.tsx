@@ -15,8 +15,10 @@ export default function LeadRight({ lead }: LeadProps) {
             : "Call time not available"}
         </p>
         <p className="text-xs">
-          <strong>Duration:</strong>
-          {lead?.call_duration ? lead?.call_duration : "not available"}
+          <strong>Duration: </strong>
+          {lead?.call_duration
+            ? lead?.call_duration + " seconds"
+            : "not available"}
         </p>
       </div>
     </div>

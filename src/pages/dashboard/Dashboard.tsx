@@ -65,9 +65,21 @@ export default function Dashboard() {
 
         <div className="flex gap-4">
           <Card title="Total Leads" qty={yearLeads?.length || 0} />
-          <Card title="Total Leads Reached" qty={reachedLeads?.length || 0} />
-          <Card title="Total Positive" qty={convertedLeads?.length || 0} />
-          <Card title="Total Negative" qty={rejectedLeads?.length || 0} />
+          <Card
+            title="Total Leads Reached"
+            qty={reachedLeads?.length || 0}
+            total={yearLeads?.length}
+          />
+          <Card
+            title="Total Positive"
+            qty={convertedLeads?.length || 0}
+            total={yearLeads?.length}
+          />
+          <Card
+            title="Total Negative"
+            qty={rejectedLeads?.length || 0}
+            total={yearLeads?.length}
+          />
         </div>
       </div>
 

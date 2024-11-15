@@ -22,7 +22,7 @@ export default function LeadCenter({ lead }: any) {
         <h3 className="font-semibold">Transcription</h3>
         <p className="text-xs">
           {lead?.call_time
-            ? `${lead?.full_name} at ${moment(lead?.call_time).fromNow()}`
+            ? `${lead?.full_name} - ${moment(lead?.call_time).fromNow()}`
             : "Call date not available"}
         </p>
       </div>

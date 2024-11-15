@@ -57,9 +57,21 @@ export default function Campaign() {
         <>
           <div className="grid grid-cols-4 gap-4 mb-6">
             <Card title="Total Leads" qty={data?.leads.length || 0} />
-            <Card title="Total Called" qty={calledLeads?.length || 0} />
-            <Card title="Total Qualified" qty={qualifiedLeads?.length || 0} />
-            <Card title="Total Rejected" qty={rejectedLeads?.length || 0} />
+            <Card
+              title="Total Called"
+              qty={calledLeads?.length || 0}
+              total={data?.leads.length}
+            />
+            <Card
+              title="Total Qualified"
+              qty={qualifiedLeads?.length || 0}
+              total={data?.leads.length}
+            />
+            <Card
+              title="Total Rejected"
+              qty={rejectedLeads?.length || 0}
+              total={data?.leads.length}
+            />
           </div>
           <div className="p-4 rounded-2xl bg-white">
             <CampaignTable

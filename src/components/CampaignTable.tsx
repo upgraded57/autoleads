@@ -11,9 +11,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Input } from "./ui/input";
 import { useEffect, useState } from "react";
-import { CampaignTableProps } from "@/utils/Types.dto";
+import { CampaignTableProps, LeadProps } from "@/utils/Types.dto";
 import { exportFile } from "@/utils/Export";
 import { CampaignShareModal } from "./CampaignShareModal";
+import { IoPlayCircle } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -106,6 +108,34 @@ export default function CampaignTable({
   // Invite user to view campaign
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
 
+  const handleNavigate = (
+    e: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+    lead: LeadProps["lead"]
+  ) => {
+    const target = e.target as HTMLTableRowElement;
+
+    if (target.className.includes("playPause")) return;
+    else {
+      if (guest) {
+        navigate(`/guest/campaigns/${campaign_id}/lead/${lead.id}`);
+      } else {
+        navigate(`/app/lead/${lead.id}`);
+      }
+    }
+  };
+
+  const handlePlayPause = (lead: LeadProps["lead"]) => {
+    const audio = new Audio(lead.recording_url!);
+    const toastId = toast.loading("Loading recording...", {
+      id: "audioToast",
+    });
+
+    audio.oncanplaythrough = () => {
+      toast.success("Now playing recording", { id: toastId });
+      audio.play();
+    };
+  };
+
   return (
     <>
       <div>
@@ -136,43 +166,40 @@ export default function CampaignTable({
             />
           </div>
           <div className="basis-1/4 flex items-center justify-end gap-2">
-            <Button
-              className="pry-btn"
-              onClick={() => setInviteModalOpen(true)}
-            >
-              Share
-            </Button>
-            <Button
-              className="pry-btn"
-              onClick={() => exportFile(data, campaign_name)}
-            >
-              Export
-            </Button>
+            {!guest && (
+              <Button
+                className="pry-btn"
+                onClick={() => setInviteModalOpen(true)}
+              >
+                Share
+              </Button>
+            )}
+            {!guest && (
+              <Button
+                className="pry-btn"
+                onClick={() => exportFile(data, campaign_name)}
+              >
+                Export
+              </Button>
+            )}
           </div>
         </div>
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Date</TableHead>
               <TableHead>Full Name</TableHead>
               <TableHead>Email Address</TableHead>
               <TableHead>Phone Number</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Feedback</TableHead>
+              <TableHead>Recording</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredLeads.slice(startIndex, endIndex).map((lead) => (
-              <TableRow
-                key={lead.id}
-                onClick={
-                  guest
-                    ? () =>
-                        navigate(
-                          `/guest/campaigns/${campaign_id}/lead/${lead.id}`
-                        )
-                    : () => navigate(`/app/lead/${lead.id}`)
-                }
-              >
+              <TableRow key={lead.id} onClick={(e) => handleNavigate(e, lead)}>
+                <TableCell></TableCell>
                 <TableCell>{lead.full_name}</TableCell>
                 <TableCell>{lead.email}</TableCell>
                 <TableCell>{lead.phone_number}</TableCell>
@@ -194,11 +221,23 @@ export default function CampaignTable({
                         ? "bg-gray-200"
                         : lead.contacted_status.toLowerCase() === "converted"
                         ? "bg-green-clr"
+                        : lead.contacted_status.toLowerCase() === "answered"
+                        ? "bg-yellow-clr"
                         : "bg-red-clr"
                     }`}
                   >
                     {lead.contacted_status}
                   </span>
+                </TableCell>
+                <TableCell>
+                  {lead.recording_url && (
+                    <span
+                      className="playPause cursor-pointer"
+                      onClick={() => handlePlayPause(lead)}
+                    >
+                      <IoPlayCircle className=" text-2xl text-pry-clr pointer-events-none" />
+                    </span>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

@@ -85,12 +85,21 @@ export default function GuestCampaign() {
             <div className="mt-10">
               <div className="grid grid-cols-4 gap-4 mb-6">
                 <Card title="Total Leads" qty={campaigns?.leads?.length || 0} />
-                <Card title="Total Called" qty={calledLeads?.length || 0} />
+                <Card
+                  title="Total Called"
+                  qty={calledLeads?.length || 0}
+                  total={campaigns?.leads?.length || 0}
+                />
                 <Card
                   title="Total Qualified"
                   qty={qualifiedLeads?.length || 0}
+                  total={campaigns?.leads?.length || 0}
                 />
-                <Card title="Total Rejected" qty={rejectedLeads?.length || 0} />
+                <Card
+                  title="Total Rejected"
+                  qty={rejectedLeads?.length || 0}
+                  total={campaigns?.leads?.length || 0}
+                />
               </div>
 
               <div className="p-4 rounded-2xl bg-white">

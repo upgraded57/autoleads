@@ -180,7 +180,7 @@ export const chooseContentUploadType = async (
 
 // add audio files to campaign with calls follow up method
 export const addCampaignAudios = async (
-  audios: string[],
+  form: FormData,
   campaign_id: string,
   navigate: NavigateFunction,
   type: string
@@ -188,12 +188,7 @@ export const addCampaignAudios = async (
   const toastId = toast.loading("Assigning audios to call");
 
   await axiosInstance
-    .put(`campaign/call/create/${campaign_id}/`, {
-      audio_link_1: audios[0],
-      audio_link_2: audios[1],
-      audio_link_3: audios[2],
-      audio_link_4: audios[3],
-    })
+    .put(`campaign/call/create/${campaign_id}/`, form)
     .then(() => {
       toast.success("Audios assigned to calls", { id: toastId });
       type === "upload" || type === "sheet"
