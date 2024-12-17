@@ -165,6 +165,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Date Contacted</TableHead>
                 <TableHead>Full Name</TableHead>
                 <TableHead>Email Address</TableHead>
                 <TableHead>Campaign Name</TableHead>
@@ -179,6 +180,11 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
                   key={lead.id}
                   onClick={() => navigate(`/app/lead/${lead.id}`)}
                 >
+                  <TableCell>
+                    {lead.last_called
+                      ? moment(lead.last_called).format("DD/MM/YYYY")
+                      : "N/A"}
+                  </TableCell>
                   <TableCell>{lead.full_name}</TableCell>
                   <TableCell>{lead.email}</TableCell>
                   <TableCell>{lead.campaign_name}</TableCell>
@@ -201,6 +207,8 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
                           ? "bg-gray-200"
                           : lead.contacted_status.toLowerCase() === "converted"
                           ? "bg-green-clr"
+                          : lead.contacted_status.toLowerCase() === "answered"
+                          ? "bg-yellow-clr"
                           : "bg-red-clr"
                       }`}
                     >

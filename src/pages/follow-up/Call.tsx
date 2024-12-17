@@ -61,7 +61,7 @@ export default function Call() {
                 <p className="text-sm">
                   Callback audio (If the user calls back)
                 </p>
-                <Input type="file" id="file4" name="audio_4" required />
+                <Input type="file" id="file4" name="audio_4" />
               </label>
             </div>
 

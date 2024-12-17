@@ -19,6 +19,10 @@ export default function dashboardData({ year }: DashboardDataProps) {
     (lead: any) => lead.status.toLowerCase() === "contacted"
   );
 
+  const answeredLeads = yearLeads?.filter(
+    (lead: any) => lead.contacted_status.toLowerCase() === "answered"
+  );
+
   const convertedLeads = yearLeads?.filter(
     (lead: any) => lead.contacted_status.toLowerCase() === "converted"
   );
@@ -35,5 +39,6 @@ export default function dashboardData({ year }: DashboardDataProps) {
     reachedLeads,
     convertedLeads,
     rejectedLeads,
+    answeredLeads
   };
 }

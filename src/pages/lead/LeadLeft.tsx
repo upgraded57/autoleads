@@ -1,8 +1,21 @@
+import { updateLeadQuality } from "@/api/campaign";
 import { LeadProps } from "@/utils/Types.dto";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function LeadLeft({ lead }: LeadProps) {
   const firstName = lead?.full_name.split(" ")[0];
   const lastName = lead?.full_name.split(" ")[1];
+  const queryClient = useQueryClient();
+
+  const [isUpdatingQuality, setIsUpdatingQuality] = useState(false);
+
+  const handleUpdateLeadQuality = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    id: string
+  ) => {
+    updateLeadQuality(e.target.value, setIsUpdatingQuality, id, queryClient);
+  };
 
   return (
     <>
@@ -27,6 +40,8 @@ export default function LeadLeft({ lead }: LeadProps) {
                 ? "bg-gray-200"
                 : lead.contacted_status.toLowerCase() === "converted"
                 ? "bg-green-clr"
+                : lead.contacted_status.toLowerCase() === "answered"
+                ? "bg-yellow-clr"
                 : "bg-red-clr"
             }`}
           >
@@ -46,6 +61,21 @@ export default function LeadLeft({ lead }: LeadProps) {
       <div className="border-t-[1px] border-gray-200 pt-2 flex items-center gap-3">
         <p>Phone:</p>
         <p className="font-semibold">{lead?.phone_number}</p>
+      </div>
+      <div className="border-t-[1px] border-gray-200 pt-2 flex items-center gap-3">
+        <p>Lead Quality:</p>
+        <select
+          className="playPause bg-transparent outline-none border-[1px] rounded-md"
+          onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
+          disabled={isUpdatingQuality}
+          value={lead.lead_quality || "pending"}
+        >
+          <option value="pending" disabled>
+            Pending
+          </option>
+          <option value="Good">Good Lead</option>
+          <option value="Bad">Bad Lead</option>
+        </select>
       </div>
     </>
   );

@@ -16,6 +16,9 @@ import { exportFile } from "@/utils/Export";
 import { CampaignShareModal } from "./CampaignShareModal";
 import { IoPlayCircle } from "react-icons/io5";
 import toast from "react-hot-toast";
+import moment from "moment";
+import { updateLeadQuality } from "@/api/campaign";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -26,6 +29,7 @@ export default function CampaignTable({
   guest,
 }: CampaignTableProps) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [q, setQ] = useSearchParams({
     status: "",
@@ -136,6 +140,20 @@ export default function CampaignTable({
     };
   };
 
+  const [isUpdatingQuality, setIsUpdatingQuality] = useState(false);
+
+  const handleUpdateLeadQuality = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    id: string
+  ) => {
+    updateLeadQuality(
+      e.target.value,
+      setIsUpdatingQuality,
+      id,
+      queryClient,
+      campaign_id
+    );
+  };
   return (
     <>
       <div>
@@ -187,19 +205,24 @@ export default function CampaignTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Date</TableHead>
+              <TableHead>Date Contacted</TableHead>
               <TableHead>Full Name</TableHead>
               <TableHead>Email Address</TableHead>
               <TableHead>Phone Number</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Feedback</TableHead>
+              <TableHead>Lead Quality</TableHead>
               <TableHead>Recording</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredLeads.slice(startIndex, endIndex).map((lead) => (
               <TableRow key={lead.id} onClick={(e) => handleNavigate(e, lead)}>
-                <TableCell></TableCell>
+                <TableCell>
+                  {lead.last_called
+                    ? moment(lead.last_called).format("DD/MM/YYYY")
+                    : "N/A"}
+                </TableCell>
                 <TableCell>{lead.full_name}</TableCell>
                 <TableCell>{lead.email}</TableCell>
                 <TableCell>{lead.phone_number}</TableCell>
@@ -229,14 +252,30 @@ export default function CampaignTable({
                     {lead.contacted_status}
                   </span>
                 </TableCell>
+                <TableCell className="playPause">
+                  <select
+                    className="playPause bg-transparent outline-none"
+                    onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
+                    disabled={isUpdatingQuality}
+                    value={lead.lead_quality || "pending"}
+                  >
+                    <option value="pending" disabled>
+                      Pending
+                    </option>
+                    <option value="Good">Good Lead</option>
+                    <option value="Bad">Bad Lead</option>
+                  </select>
+                </TableCell>
                 <TableCell>
-                  {lead.recording_url && (
+                  {lead.recording_url ? (
                     <span
                       className="playPause cursor-pointer"
                       onClick={() => handlePlayPause(lead)}
                     >
                       <IoPlayCircle className=" text-2xl text-pry-clr pointer-events-none" />
                     </span>
+                  ) : (
+                    "N/A"
                   )}
                 </TableCell>
               </TableRow>

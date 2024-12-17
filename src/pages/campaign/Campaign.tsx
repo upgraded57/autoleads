@@ -25,10 +25,10 @@ export default function Campaign() {
       return el.contacted_status.toLowerCase() === "converted";
     });
 
-  const rejectedLeads =
+  const answeredLeads =
     data?.leads &&
     data?.leads.filter((el: any) => {
-      return el.contacted_status.toLowerCase() === "rejected";
+      return el.contacted_status.toLowerCase() === "answered";
     });
 
   return (
@@ -63,14 +63,14 @@ export default function Campaign() {
               total={data?.leads.length}
             />
             <Card
-              title="Total Qualified"
-              qty={qualifiedLeads?.length || 0}
-              total={data?.leads.length}
+              title="Total Answered"
+              qty={answeredLeads?.length || 0}
+              total={calledLeads?.length}
             />
             <Card
-              title="Total Rejected"
-              qty={rejectedLeads?.length || 0}
-              total={data?.leads.length}
+              title="Total Qualified"
+              qty={qualifiedLeads?.length || 0}
+              total={answeredLeads?.length}
             />
           </div>
           <div className="p-4 rounded-2xl bg-white">
@@ -86,8 +86,8 @@ export default function Campaign() {
           <div className="grid grid-cols-4 gap-4 mb-6">
             <Card title="Total Leads" qty={0} />
             <Card title="Total Called" qty={0} />
+            <Card title="Total Answered" qty={0} />
             <Card title="Total Qualified" qty={0} />
-            <Card title="Total Rejected" qty={0} />
           </div>
           <EmptyState />
         </>

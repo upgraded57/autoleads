@@ -26,6 +26,8 @@ export interface CampaignTableProps {
     phone_number: string;
     recording_url: string | null;
     status: string;
+    last_called: string | null;
+    lead_quality: string | null;
   }[];
 }
 
@@ -41,6 +43,8 @@ export interface LeadProps {
     phone_number: string;
     recording_url: string | null;
     status: string;
+    last_called: string | null;
+    lead_quality: string | null;
   };
 }
 
@@ -57,6 +61,8 @@ export interface DashboardTableProps {
     recording_url: string;
     status: string;
     campaign_name: string;
+    last_called: string | null;
+    lead_quality: string | null;
   }[];
   year: string;
 }

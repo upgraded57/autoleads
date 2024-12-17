@@ -25,7 +25,7 @@ export default function Dashboard() {
     yearLeads,
     reachedLeads,
     convertedLeads,
-    rejectedLeads,
+    answeredLeads,
   } = dashboardData({ year });
 
   if (isLoading)
@@ -66,18 +66,18 @@ export default function Dashboard() {
         <div className="flex gap-4">
           <Card title="Total Leads" qty={yearLeads?.length || 0} />
           <Card
-            title="Total Leads Reached"
+            title="Total Reached"
             qty={reachedLeads?.length || 0}
             total={yearLeads?.length}
           />
           <Card
-            title="Total Positive"
-            qty={convertedLeads?.length || 0}
-            total={yearLeads?.length}
+            title="Total Answered"
+            qty={answeredLeads?.length || 0}
+            total={reachedLeads?.length}
           />
           <Card
-            title="Total Negative"
-            qty={rejectedLeads?.length || 0}
+            title="Total Positive"
+            qty={convertedLeads?.length || 0}
             total={yearLeads?.length}
           />
         </div>

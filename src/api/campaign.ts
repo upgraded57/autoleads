@@ -1,9 +1,10 @@
 import toast from "react-hot-toast";
 import { axiosInstance } from "./axiosInstance";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseURL } from "./baseUrl";
 import { NavigateFunction } from "react-router-dom";
+import { SetStateAction } from "react";
 
 // create campaign
 export const createCampaign = async (
@@ -167,11 +168,11 @@ export const chooseContentUploadType = async (
       toast.success("Content type set", { id: toastId });
       cType.toLowerCase() === "audio"
         ? navigate(
-            `/campaigns/new/${campaign_id}/${type}/${option!.toLowerCase()}`
-          )
+          `/campaigns/new/${campaign_id}/${type}/${option!.toLowerCase()}`
+        )
         : navigate(
-            `/campaigns/new/${campaign_id}/tts/${type}/${option!.toLowerCase()}`
-          );
+          `/campaigns/new/${campaign_id}/tts/${type}/${option!.toLowerCase()}`
+        );
     })
     .catch(() => {
       toast.error("Something went wrong", { id: toastId });
@@ -300,3 +301,21 @@ export const useFetchRoles = () => {
     select: (data) => data.data,
   });
 };
+
+export const updateLeadQuality = async (quality: string, setIsLoading: React.Dispatch<SetStateAction<boolean>>, lead_id: string, queryClient: QueryClient, campaign_id?: string,) => {
+  setIsLoading(true)
+  const toastId = toast.loading("Updating lead quality")
+
+  await axiosInstance
+    .put(`update-lead-quality/${lead_id}`, { lead_quality: quality })
+    .then(() => {
+      toast.success("Lead quality updated successfully", { id: toastId })
+      queryClient.invalidateQueries({
+        queryKey: ["Campaign", campaign_id]
+      })
+    })
+    .catch(() => {
+      toast.error("Unable to update lead quality", { id: toastId })
+    })
+    .finally(() => setIsLoading(false))
+}
