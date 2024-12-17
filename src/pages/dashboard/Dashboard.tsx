@@ -78,7 +78,7 @@ export default function Dashboard() {
           <Card
             title="Total Positive"
             qty={convertedLeads?.length || 0}
-            total={yearLeads?.length}
+            total={answeredLeads?.length}
           />
         </div>
       </div>
