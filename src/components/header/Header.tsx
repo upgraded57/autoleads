@@ -8,10 +8,10 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 export default function Header() {
   const navigate = useNavigate();
   const navLinks = [
-    {
-      path: "#",
-      title: "Resources",
-    },
+    // {
+    //   path: "#",
+    //   title: "Resources",
+    // },
     {
       path: "/features",
       title: "Features",
