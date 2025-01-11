@@ -257,9 +257,9 @@ export default function CampaignTable({
                     className="playPause bg-transparent outline-none"
                     onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
                     disabled={isUpdatingQuality}
-                    value={lead.lead_quality || "pending"}
+                    value={lead.lead_quality || "Pending"}
                   >
-                    <option value="pending" disabled>
+                    <option value="Pending" disabled>
                       Pending
                     </option>
                     <option value="Good">Good Lead</option>

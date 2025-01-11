@@ -59,10 +59,10 @@ export default function GuestCampaign() {
       return el.contacted_status.toLowerCase() === "converted";
     });
 
-  const rejectedLeads =
+  const answeredLeads =
     campaigns?.leads &&
     campaigns?.leads.filter((el: any) => {
-      return el.contacted_status.toLowerCase() === "rejected";
+      return el.contacted_status.toLowerCase() === "answered";
     });
 
   return (
@@ -91,14 +91,14 @@ export default function GuestCampaign() {
                   total={campaigns?.leads?.length || 0}
                 />
                 <Card
-                  title="Total Qualified"
-                  qty={qualifiedLeads?.length || 0}
-                  total={campaigns?.leads?.length || 0}
+                  title="Total Answered"
+                  qty={answeredLeads?.length || 0}
+                  total={calledLeads?.length || 0}
                 />
                 <Card
-                  title="Total Rejected"
-                  qty={rejectedLeads?.length || 0}
-                  total={campaigns?.leads?.length || 0}
+                  title="Total Qualified"
+                  qty={qualifiedLeads?.length || 0}
+                  total={answeredLeads?.length || 0}
                 />
               </div>
 
