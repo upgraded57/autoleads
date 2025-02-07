@@ -17,7 +17,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { forgotPassword, OTPResetVerify, resendOTP } from "@/api/auth";
+import { forgotPassword, OTPResetVerify } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword() {
@@ -81,11 +81,7 @@ export default function ForgotPassword() {
           </form>
         </div>
       </div>
-      <VerifyResetOtp
-        isOpen={openModal}
-        resetUserId={resetUserId}
-        email={email}
-      />
+      <VerifyResetOtp isOpen={openModal} resetUserId={resetUserId} />
     </div>
   );
 }
@@ -93,11 +89,9 @@ export default function ForgotPassword() {
 const VerifyResetOtp = ({
   isOpen,
   resetUserId,
-  email,
 }: {
   isOpen: boolean;
   resetUserId: string;
-  email: string;
 }) => {
   const cn = "rounded-md border-[1px]";
   const navigate = useNavigate();
