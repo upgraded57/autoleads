@@ -3,18 +3,32 @@ import toast from "react-hot-toast";
 import { baseURL } from "./baseUrl";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
-
-// // forgot password
-// const forgotPassword = (mail) => {
-//   return axios.post(`${baseURL}/forgot-password/`, mail);
-// };
-
-// export const useForgotPassword = () => {
-//   return useMutation(forgotPassword, {
-//     onSuccess: (data) =>
-//       localStorage.setItem("resetUserId", JSON.stringify(data.data.user_id)),
-//   });
-// };
+// forgot password
+export const forgotPassword = async (
+  mail: {},
+  setResetUserId: React.Dispatch<SetStateAction<string>>,
+  setOpenModal: React.Dispatch<SetStateAction<boolean>>
+) => {
+  const toastId = toast.loading("Sending OTP");
+  await axios
+    .post(`${baseURL}/forgot-password/`, mail)
+    .then((res) => {
+      setResetUserId(res.data.user_id);
+      sessionStorage.setItem("user_id", res.data.user_id);
+      setOpenModal(true);
+      toast.success("OTP sent to your mail", {
+        id: toastId,
+      });
+    })
+    .catch((err) => {
+      toast.error(
+        err.response.data.message || "Something went wrong. Please retry",
+        {
+          id: toastId,
+        }
+      );
+    });
+};
 
 // register new user
 export const registerUser = async (
@@ -106,25 +120,6 @@ export const loginUser = async (
     });
 };
 
-// forgot password
-// export const forgotPassword = async (mail, setResetUserId) => {
-//   const toastId = toast.loading("Sending OTP");
-//   await axios
-//     .post(`${baseURL}/forgot-password/`, mail)
-//     .then((res) => {
-//       setResetUserId(res.data.user_id);
-//       toast.success("OTP sent to your mail", {
-//         id: toastId,
-//       });
-//     })
-//     .catch((err) => {
-//       toast.error("Something went wrong. Please retry", {
-//         id: toastId,
-//       });
-//       console.log(err);
-//     });
-// };
-
 // verify OTP
 export const OTPVerify = async (data: {}, navigate: NavigateFunction) => {
   const toastId = toast.loading("Verifying OTP...");
@@ -149,10 +144,34 @@ export const OTPVerify = async (data: {}, navigate: NavigateFunction) => {
     });
 };
 
+// verify password reset OTP
+export const OTPResetVerify = async (data: {}, navigate: NavigateFunction) => {
+  const toastId = toast.loading("Verifying OTP...");
+  await axios({
+    url: `${baseURL}/verify-password-otp/`,
+    method: "post",
+    data,
+  })
+    .then(() => {
+      toast.success("OTP verification successful", {
+        id: toastId,
+      });
+      localStorage.removeItem("newUser");
+      navigate("/auth/reset-password");
+    })
+
+    .catch((err) => {
+      toast.error("Please check the OTP and retry", {
+        id: toastId,
+      });
+      console.log(err);
+    });
+};
+
 export const resendOTP = async (email: string) => {
   const toastId = toast.loading("Resend OTP", { id: "resendotp" });
   await axios
-    .post(`${baseURL}/auth/user/resend_activation`, { email })
+    .post(`${baseURL}/auth/users/resend_activation`, { email })
     .then(() => {
       toast.success("OTP resent to your email", { id: toastId });
     })
@@ -161,7 +180,15 @@ export const resendOTP = async (email: string) => {
     });
 };
 
-// export const logout = (navigate) => {
-//   localStorage.clear();
-//   navigate("/auth");
-// };
+export const resetPassword = async (data: {}, navigate: NavigateFunction) => {
+  const toastId = toast.loading("Resetting password", { id: "resendotp" });
+  await axios
+    .post(`${baseURL}/reset-password/`, data)
+    .then(() => {
+      toast.success("Password reset successfully", { id: toastId });
+      navigate("/auth");
+    })
+    .catch(() => {
+      toast.error("Something went wrong. Please retry", { id: toastId });
+    });
+};

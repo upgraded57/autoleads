@@ -21,6 +21,8 @@ const ContentType = lazy(() => import("@/pages/content-type/ContentType"));
 const FormWizard = lazy(() => import("@/pages/form-wizard/FormWizard"));
 const UserForms = lazy(() => import("@/pages/user-forms/UserForms"));
 const VerifyOtp = lazy(() => import("@/pages/auth/VerifyOtp"));
+const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const GuestCampaign = lazy(() => import("@/pages/guest/GuestCampaign"));
 const Features = lazy(() => import("@/pages/features/Features"));
 const Pricing = lazy(() => import("@/pages/pricing/Pricing"));
@@ -67,6 +69,14 @@ export const Routes = [
       {
         path: "/auth/verify-otp",
         element: <VerifyOtp />,
+      },
+      {
+        path: "/auth/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/auth/reset-password",
+        element: <ResetPassword />,
       },
     ],
   },

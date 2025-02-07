@@ -66,7 +66,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <ul className="hidden md:flex items-center justify-between basis-2/4 w-full">
+      <ul className="hidden md:flex items-center justify-between mx-auto max-w-lg  basis-2/4 w-full">
         {navLinks.map((el, idx) => (
           <li key={idx}>
             <Link to={el.path} className="text-sm">

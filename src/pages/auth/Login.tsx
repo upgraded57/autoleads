@@ -62,7 +62,7 @@ export default function Login({ setAuthState }: AuthPageProps) {
           </div>
         </label>
         <Link
-          to="/forgot-password"
+          to="/auth/forgot-password"
           className="text-sm w-max float-right mt-1 text-pry-clr hover:underline"
         >
           Forgot Password?
