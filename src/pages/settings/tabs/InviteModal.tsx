@@ -73,7 +73,7 @@ export function InviteModal({
                     className="p-0 h-auto"
                   >
                     <select
-                      className="bg-transparent outline-none h-10 px-2 w-full"
+                      className="bg-transparent outline-hidden h-10 px-2 w-full"
                       name={`role${idx}`}
                       id={`role${idx}`}
                       required

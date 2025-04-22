@@ -114,7 +114,7 @@ export default function DashboardTable({ data, year }: DashboardTableProps) {
             <p className="">Status:</p>
             <Button variant="outline" className="p-0 h-auto">
               <select
-                className="bg-transparent outline-none h-10 px-2"
+                className="bg-transparent outline-hidden h-10 px-2"
                 onChange={(e) => setFilter("status", e.target.value)}
               >
                 <option value="">All</option>

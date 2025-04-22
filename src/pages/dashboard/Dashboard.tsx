@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Card from "@/components/Card";
 import Loader from "@/components/ui/loader";
-import dashboardData from "./data/dashboardData";
+import DashboardData from "./data/DashboardData";
 import FollowUpChart from "@/components/FollowUpChart";
 import RecentActivities from "@/components/RecentActivities";
 import { useState } from "react";
@@ -23,10 +23,10 @@ export default function Dashboard() {
     isLoading,
     leads,
     yearLeads,
-    reachedLeads,
-    convertedLeads,
+    qualifiedLeads,
+    calledLeads,
     answeredLeads,
-  } = dashboardData({ year });
+  } = DashboardData({ year });
 
   if (isLoading)
     return (
@@ -53,7 +53,7 @@ export default function Dashboard() {
           <h4 className="text-lg font-semibold">Summary</h4>
           <Button variant="outline" className="p-0 h-auto">
             <select
-              className="bg-transparent outline-none h-10 px-2"
+              className="bg-transparent outline-hidden h-10 px-2"
               onChange={(e) => setYear(e.target.value)}
             >
               <option value={currentYear}>This Year</option>
@@ -66,18 +66,18 @@ export default function Dashboard() {
         <div className="flex gap-4">
           <Card title="Total Leads" qty={yearLeads?.length || 0} />
           <Card
-            title="Total Reached"
-            qty={reachedLeads?.length || 0}
+            title="Total Called"
+            qty={calledLeads?.length || 0}
             total={yearLeads?.length}
           />
           <Card
             title="Total Answered"
             qty={answeredLeads?.length || 0}
-            total={reachedLeads?.length}
+            total={calledLeads?.length}
           />
           <Card
-            title="Total Positive"
-            qty={convertedLeads?.length || 0}
+            title="Total Qualified"
+            qty={qualifiedLeads?.length || 0}
             total={answeredLeads?.length}
           />
         </div>

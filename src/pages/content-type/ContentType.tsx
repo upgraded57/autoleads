@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 export default function ContentType() {
-  const [cType, setCType] = useState<"Audio" | "Text" | null>(null);
+  const [cType, setCType] = useState<"Audio" | "Text" | "AI" | null>(null);
   const { campaign_id } = useParams();
   const navigate = useNavigate();
   const [q] = useSearchParams();
@@ -56,6 +56,15 @@ export default function ContentType() {
                   onChange={() => setCType("Text")}
                 />
                 <p>Text Input</p>
+              </label>
+              <label htmlFor="ai" className="flex gap-2 items-center mb-2">
+                <input
+                  type="radio"
+                  name="method"
+                  id="ai"
+                  onChange={() => setCType("AI")}
+                />
+                <p>AI Calls</p>
               </label>
               <Button type="submit" className="pry-btn w-full">
                 Continue

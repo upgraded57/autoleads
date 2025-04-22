@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useFetchDashboardLeads } from "@/api/campaign";
 import { UserContext } from "@/context/UserContext";
 import moment from "moment";
@@ -5,7 +6,7 @@ import { useContext } from "react";
 interface DashboardDataProps {
   year: string | "";
 }
-export default function dashboardData({ year }: DashboardDataProps) {
+export default function DashboardData({ year }: DashboardDataProps) {
   const user = useContext(UserContext)?.user;
   const { isLoading, data: business } = useFetchDashboardLeads();
   const leads = business?.leads;
@@ -15,16 +16,16 @@ export default function dashboardData({ year }: DashboardDataProps) {
       (year ?? new Date().getFullYear.toString())
   );
 
-  const reachedLeads = yearLeads?.filter(
+  const calledLeads = yearLeads?.filter(
     (lead: any) => lead.status.toLowerCase() === "contacted"
+  );
+
+  const qualifiedLeads = yearLeads?.filter(
+    (lead: any) => lead.contacted_status.toLowerCase() === "converted"
   );
 
   const answeredLeads = yearLeads?.filter(
     (lead: any) => lead.contacted_status.toLowerCase() === "answered"
-  );
-
-  const convertedLeads = yearLeads?.filter(
-    (lead: any) => lead.contacted_status.toLowerCase() === "converted"
   );
 
   const rejectedLeads = yearLeads?.filter(
@@ -36,9 +37,9 @@ export default function dashboardData({ year }: DashboardDataProps) {
     user,
     isLoading,
     yearLeads,
-    reachedLeads,
-    convertedLeads,
+    calledLeads,
+    answeredLeads,
     rejectedLeads,
-    answeredLeads
+    qualifiedLeads,
   };
 }

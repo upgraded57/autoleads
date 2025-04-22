@@ -6,7 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import dashboardData from "@/pages/dashboard/data/dashboardData";
+import dashboardData from "@/pages/dashboard/data/DashboardData";
 import moment from "moment";
 
 interface FollowUpChartprops {

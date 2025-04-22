@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LayoutTop from "@/components/LayoutTop";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/Card";

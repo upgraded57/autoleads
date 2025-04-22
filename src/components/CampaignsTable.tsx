@@ -78,7 +78,7 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
           <p className="">Filter by:</p>
           <Button variant="outline" className="p-0 h-auto">
             <select
-              className="bg-transparent outline-none h-10 px-2"
+              className="bg-transparent outline-hidden h-10 px-2"
               onChange={(e) => setFilter("type", e.target.value)}
               defaultValue={q.get("type") ?? ""}
             >

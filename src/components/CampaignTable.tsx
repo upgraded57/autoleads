@@ -162,7 +162,7 @@ export default function CampaignTable({
             <p className="">Status:</p>
             <Button variant="outline" className="p-0 h-auto">
               <select
-                className="bg-transparent outline-none h-10 px-2"
+                className="bg-transparent outline-hidden h-10 px-2"
                 onChange={(e) => setFilter("status", e.target.value)}
               >
                 <option value="">All</option>
@@ -254,7 +254,7 @@ export default function CampaignTable({
                 </TableCell>
                 <TableCell className="playPause">
                   <select
-                    className="playPause bg-transparent outline-none"
+                    className="playPause bg-transparent outline-hidden"
                     onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
                     disabled={isUpdatingQuality}
                     value={lead.lead_quality || "Pending"}

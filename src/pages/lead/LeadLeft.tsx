@@ -65,7 +65,7 @@ export default function LeadLeft({ lead }: LeadProps) {
       <div className="border-t-[1px] border-gray-200 pt-2 flex items-center gap-3">
         <p>Lead Quality:</p>
         <select
-          className="playPause bg-transparent outline-none border-[1px] rounded-md"
+          className="playPause bg-transparent outline-hidden border-[1px] rounded-md"
           onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
           disabled={isUpdatingQuality}
           value={lead.lead_quality || "pending"}

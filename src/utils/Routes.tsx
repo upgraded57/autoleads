@@ -1,5 +1,6 @@
 import Loader from "@/components/ui/loader";
 import { lazy, Suspense } from "react";
+import { createBrowserRouter } from "react-router-dom";
 
 import DashboardLayout from "@/layouts/DashboardLayout";
 import Index from "@/pages/home/Index";
@@ -24,13 +25,14 @@ const VerifyOtp = lazy(() => import("@/pages/auth/VerifyOtp"));
 const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const GuestCampaign = lazy(() => import("@/pages/guest/GuestCampaign"));
-const Features = lazy(() => import("@/pages/features/Features"));
-const Pricing = lazy(() => import("@/pages/pricing/Pricing"));
-const About = lazy(() => import("@/pages/about/About"));
+const Features = lazy(() => import("@/pages/Features/Features"));
+const Pricing = lazy(() => import("@/pages/Pricing/Pricing"));
+const About = lazy(() => import("@/pages/About/About"));
 const NotFound = lazy(() => import("@/pages/not-found/NotFound"));
 import RootCampaignsLayout from "@/layouts/RootCampaignsLayout";
 import GuestLayout from "@/pages/guest/GuestLayout";
 import GuestLead from "@/pages/guest/GuestLead";
+const AICall = lazy(() => import("@/pages/follow-up/AICall"));
 const Home = lazy(() => import("@/pages/home/Home"));
 
 export const SuspenseFallback = () => {
@@ -41,7 +43,7 @@ export const SuspenseFallback = () => {
   );
 };
 
-export const Routes = [
+export const Routes = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
@@ -119,6 +121,7 @@ export const Routes = [
       },
     ],
   },
+
   {
     path: "/campaigns",
     element: <RootCampaignsLayout />,
@@ -138,6 +141,10 @@ export const Routes = [
       {
         path: "new/:campaign_id/tts/:type/call",
         element: <TextToSpeech />,
+      },
+      {
+        path: "new/:campaign_id/ai/:type/call",
+        element: <AICall />,
       },
       {
         path: "new/:campaign_id/:type/call",
@@ -185,4 +192,4 @@ export const Routes = [
       </Suspense>
     ),
   },
-];
+]);

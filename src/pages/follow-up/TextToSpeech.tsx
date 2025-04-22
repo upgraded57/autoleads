@@ -6,14 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function TextToSpeech() {
   const navigate = useNavigate();
-  const { campaign_id } = useParams();
-  const { type } = useParams();
+  const { campaign_id, type } = useParams();
 
   const chooseTTS = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const data = Object.fromEntries(new FormData(form));
-    const texts = [data.text1, data.text2, data.text3, data.text4];
+    const texts = [data.text1, data.text2, data.text3, data.text4] as string[];
     addCampaignTexts(texts, campaign_id, navigate, type);
   };
 

@@ -68,7 +68,9 @@ export default function DashboardLinks() {
           key={idx}
         >
           <span>{link.icon}</span>
-          <p className="text-[16px] hidden lg:block">{link.title}</p>
+          <p className="text-[16px] hidden lg:block text-nowrap">
+            {link.title}
+          </p>
         </NavLink>
       ))}
     </div>

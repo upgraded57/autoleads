@@ -166,13 +166,21 @@ export const chooseContentUploadType = async (
     .put(`/campaign/content-option/${campaign_id}/`, { content_option: cType })
     .then(() => {
       toast.success("Content type set", { id: toastId });
-      cType.toLowerCase() === "audio"
-        ? navigate(
+      if (cType.toLowerCase() === "audio") {
+        navigate(
           `/campaigns/new/${campaign_id}/${type}/${option!.toLowerCase()}`
-        )
-        : navigate(
+        );
+      }
+      if (cType.toLowerCase() === "ai") {
+        navigate(
+          `/campaigns/new/${campaign_id}/ai/${type}/${option!.toLowerCase()}`
+        );
+      }
+      if (cType.toLowerCase() === "text") {
+        navigate(
           `/campaigns/new/${campaign_id}/tts/${type}/${option!.toLowerCase()}`
         );
+      }
     })
     .catch(() => {
       toast.error("Something went wrong", { id: toastId });
@@ -192,9 +200,11 @@ export const addCampaignAudios = async (
     .put(`campaign/call/create/${campaign_id}/`, form)
     .then(() => {
       toast.success("Audios assigned to calls", { id: toastId });
-      type === "upload" || type === "sheet"
-        ? navigate("/app/campaigns")
-        : navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+      if (type === "upload" || type === "sheet") {
+        navigate("/app/campaigns");
+      } else {
+        navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+      }
     })
     .catch(() => {
       toast.error("Something went wrong. Please retry", { id: toastId });
@@ -203,7 +213,7 @@ export const addCampaignAudios = async (
 
 // add texts to campaign with calls follow up method
 export const addCampaignTexts = async (
-  text: any[],
+  text: string[],
   campaign_id: string | undefined,
   navigate: NavigateFunction,
   type: string | undefined
@@ -219,9 +229,35 @@ export const addCampaignTexts = async (
     })
     .then(() => {
       toast.success("Audios assigned to calls", { id: toastId });
-      type === "upload" || type === "sheet"
-        ? navigate("/app/campaigns")
-        : navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+      if (type === "upload" || type === "sheet") {
+        navigate("/app/campaigns");
+      } else {
+        navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+      }
+    })
+    .catch(() => {
+      toast.error("Something went wrong. Please retry", { id: toastId });
+    });
+};
+
+// add contenxt to campaign with ai calls  follow up method
+export const addCampaignContext = async (
+  form: FormData,
+  campaign_id: string | undefined,
+  navigate: NavigateFunction,
+  type: string | undefined
+) => {
+  const toastId = toast.loading("Assigning context to calls");
+
+  await axiosInstance
+    .put(`campaign/call/create/${campaign_id}/`, form)
+    .then(() => {
+      toast.success("Audios assigned to calls", { id: toastId });
+      if (type === "upload" || type === "sheet") {
+        navigate("/app/campaigns");
+      } else {
+        navigate(`/campaigns/new/form/${campaign_id}/wizard`);
+      }
     })
     .catch(() => {
       toast.error("Something went wrong. Please retry", { id: toastId });
@@ -302,20 +338,26 @@ export const useFetchRoles = () => {
   });
 };
 
-export const updateLeadQuality = async (quality: string, setIsLoading: React.Dispatch<SetStateAction<boolean>>, lead_id: string, queryClient: QueryClient, campaign_id?: string,) => {
-  setIsLoading(true)
-  const toastId = toast.loading("Updating lead quality")
+export const updateLeadQuality = async (
+  quality: string,
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>,
+  lead_id: string,
+  queryClient: QueryClient,
+  campaign_id?: string
+) => {
+  setIsLoading(true);
+  const toastId = toast.loading("Updating lead quality");
 
   await axiosInstance
     .put(`update-lead-quality/${lead_id}`, { lead_quality: quality })
     .then(() => {
-      toast.success("Lead quality updated successfully", { id: toastId })
+      toast.success("Lead quality updated successfully", { id: toastId });
       queryClient.invalidateQueries({
-        queryKey: ["Campaign", campaign_id]
-      })
+        queryKey: ["Campaign", campaign_id],
+      });
     })
     .catch(() => {
-      toast.error("Unable to update lead quality", { id: toastId })
+      toast.error("Unable to update lead quality", { id: toastId });
     })
-    .finally(() => setIsLoading(false))
-}
+    .finally(() => setIsLoading(false));
+};
