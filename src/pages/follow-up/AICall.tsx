@@ -38,6 +38,7 @@ export default function AICall() {
                 name="campaign_details"
                 rows={5}
                 required
+                maxLength={5000}
               />
             </div>
             <div className="mt-6 mb-2">
@@ -50,6 +51,7 @@ export default function AICall() {
                 className="w-full border rounded-md p-2 resize-none outline-offset-[4px] text-sm font-normal mt-2"
                 name="campaign_goal"
                 rows={5}
+                maxLength={5000}
                 required
               />
             </div>
