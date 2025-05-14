@@ -8,6 +8,11 @@ import Roles from "./tabs/Roles";
 export default function Settings() {
   const tabTriggers = [
     {
+      value: "roles",
+      text: "Roles and Permissions",
+      component: <Roles />,
+    },
+    {
       value: "text",
       text: "Custom Text Body",
       component: <CustomText />,
@@ -22,11 +27,6 @@ export default function Settings() {
       text: "Contact Form",
       component: <Form />,
     },
-    {
-      value: "roles",
-      text: "Roles and Permissions",
-      component: <Roles />,
-    },
   ];
   return (
     <>
@@ -34,7 +34,7 @@ export default function Settings() {
         title="Settings"
         subtitle="Customize platform to suit your needs"
       />
-      <Tabs defaultValue="text" className="w-full">
+      <Tabs defaultValue="roles" className="w-full">
         <TabsList className="w-full bg-transparent border-b-[1px] border-gray-400 rounded-none mb-6">
           {tabTriggers.map((trigger, idx) => (
             <TabsTrigger

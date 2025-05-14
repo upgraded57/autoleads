@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "@/api/axiosInstance";
 import { useQueryClient } from "@tanstack/react-query";
 import EmptyState from "@/components/EmptyState";
+import { Button } from "@/components/ui/button";
 
 interface UserProps {
   users: {
@@ -94,21 +95,23 @@ export default function UsersTable({ users }: UserProps) {
                   <HiDotsVertical />
                 </PopoverTrigger>
                 <PopoverContent className="bg-white rounded-md p-2 flex flex-col gap-2 border-[1px] border-neutral-light-clr max-w-max">
-                  <Badge
+                  <Button
                     variant="outline"
-                    className="font-normal cursor-pointer hover:bg-black hover:text-white hover:border-transparent justify-center"
+                    size="sm"
+                    className="font-normal cursor-pointer"
                     onClick={() => copyLink(user.link)}
                   >
                     Copy Link
-                  </Badge>
+                  </Button>
                   {user.has_access && (
-                    <Badge
+                    <Button
                       variant="outline"
+                      size="sm"
                       className="font-normal cursor-pointer hover:bg-red-600 hover:text-white hover:border-transparent justify-center"
                       onClick={() => revokeAccess(user.id)}
                     >
                       Revoke Access
-                    </Badge>
+                    </Button>
                   )}
                 </PopoverContent>
               </Popover>

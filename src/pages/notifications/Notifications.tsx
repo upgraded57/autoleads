@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useFetchLogs } from "@/api/campaign";
 import moment from "moment";
 import EmptyState from "@/components/EmptyState";
+import Loader from "@/components/ui/loader";
 
 interface LogProps {
   action: "CREATION" | "MODFICATION" | "LAUNCH";
@@ -15,7 +16,13 @@ interface LogProps {
   user: string;
 }
 export default function Notifications() {
-  const { data: logs } = useFetchLogs();
+  const { isLoading, data: logs } = useFetchLogs();
+  if (isLoading)
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
   return (
     <>
       <LayoutTop

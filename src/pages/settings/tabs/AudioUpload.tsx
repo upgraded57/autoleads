@@ -1,3 +1,5 @@
+import EmptyEntity from "@/components/EmptyEntity";
+
 export default function AudioUpload() {
-  return <div>AudioUpload</div>;
+  return <EmptyEntity />;
 }

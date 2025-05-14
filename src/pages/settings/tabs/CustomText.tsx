@@ -1,3 +1,5 @@
+import EmptyEntity from "@/components/EmptyEntity";
+
 export default function CustomText() {
-  return <div>CustomText</div>;
+  return <EmptyEntity />;
 }
