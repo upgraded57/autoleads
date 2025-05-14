@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/table";
 import moment from "moment";
 import { HiDotsVertical } from "react-icons/hi";
-import { Badge } from "@/components/ui/badge";
 import {
   Popover,
   PopoverContent,
