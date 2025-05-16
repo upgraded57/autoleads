@@ -3,16 +3,13 @@ import "./userforms.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FaTriangleExclamation } from "react-icons/fa6";
 export default function UserForms() {
-  const { campaign_id } = useParams();
+  const { campaign_id } = useParams() as { campaign_id: string };
 
-  useEffect(() => {
-    if (!campaign_id) <Navigate to="/auth" />;
-  }, []);
-
-  const [formData, setFormData] = useState<any | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [formData, setFormData] = useState<Record<string, any> | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -29,7 +26,7 @@ export default function UserForms() {
     };
 
     getFormData();
-  }, []);
+  }, [campaign_id]);
 
   const texts = formData?.texts;
   const styles = formData?.styles;

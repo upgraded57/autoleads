@@ -17,7 +17,7 @@ export default function DashboardLayout() {
         </div>
         <DashboardLinks />
       </div>
-      <div className="flex-1 h-full overflow-scroll pr-2">
+      <div className="flex-1 h-full overflow-scroll pr-5">
         <UserProvider>
           <ProtectedRoutes>
             <Suspense fallback={<SuspenseFallback />}>

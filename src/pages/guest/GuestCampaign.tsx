@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { useEffect, useState } from "react";
@@ -62,7 +63,10 @@ export default function GuestCampaign() {
   const answeredLeads =
     campaigns?.leads &&
     campaigns?.leads.filter((el: any) => {
-      return el.contacted_status.toLowerCase() === "answered";
+      return (
+        el.contacted_status.toLowerCase() === "answered" ||
+        el.contacted_status.toLowerCase() === "converted"
+      );
     });
 
   return (

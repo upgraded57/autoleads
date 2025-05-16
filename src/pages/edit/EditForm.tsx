@@ -3,13 +3,17 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FaRegSquareCheck } from "react-icons/fa6";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEditDesign, useGetFormDesign } from "@/api/campaign";
+import Loader from "@/components/ui/loader";
+import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { axiosInstance } from "@/api/axiosInstance";
-import { useParams } from "react-router-dom";
-import { FormCreatedModal } from "./FormCreatedModal";
 
-export default function FormWizard() {
-  const { campaign_id } = useParams();
+export default function EditForm() {
+  const { campaign_id } = useParams() as { campaign_id: string };
+  const { isLoading, data } = useGetFormDesign(campaign_id);
+  const navigate = useNavigate();
+
   const [inputFields, setInputFields] = useState({
     title: "",
     subtitle: "",
@@ -31,8 +35,6 @@ export default function FormWizard() {
     btnText: "",
     btnBg: "",
   });
-
-  const [modalActive, setModalActive] = useState(false);
 
   const inputs = {
     texts: [
@@ -133,50 +135,60 @@ export default function FormWizard() {
     },
   };
 
-  const createForm = async () => {
-    const toastId = toast.loading("Creating form");
-    await axiosInstance
-      .post(`/campaign/${campaign_id}/form-design/`, {
-        design: JSON.stringify(design),
-      })
+  const prevData = data?.design ? JSON.parse(data?.design) : {};
+
+  const texts = prevData.texts;
+  const styles = prevData.styles;
+
+  const fields = prevData.fields;
+
+  const { mutateAsync: editForm, isPending } = useEditDesign();
+  const handleEditForm = () => {
+    const toastId = toast.loading("Updating form design", {
+      id: "updateToast",
+    });
+    editForm({
+      campaign_id,
+      design,
+    })
       .then(() => {
-        toast.success("Form created successully", { id: toastId });
-        setModalActive(true);
+        toast.success("Form design updated successfully", { id: toastId });
+        navigate("/app/campaigns");
       })
-      .catch((err) => {
-        console.log(err);
-        toast.error(
-          err.response.data[0] || "Something went wrong. Please retry",
-          { id: toastId }
-        );
+      .catch(() => {
+        toast.error("Unable to update form design", { id: toastId });
       });
   };
+
+  if (isLoading)
+    return (
+      <div className="w-full h-screen pb-[200px] grid place-content-center">
+        <Loader />
+      </div>
+    );
 
   return (
     <>
       <Logo />
-      {
-        <FormCreatedModal
-          inviteModalOpen={modalActive}
-          campaign_id={campaign_id!}
-        />
-      }
       <div className="flex items-center justify-between">
-        <h1 className="text-header text-2xl font-semibold">
-          Customize your form
-        </h1>
-        <Button className="pry-btn gap-2" onClick={createForm}>
-          <FaRegSquareCheck className="text-lg" /> Create Form
+        <h1 className="text-header text-2xl font-semibold">Edit your form</h1>
+        <Button
+          className="pry-btn gap-2"
+          onClick={handleEditForm}
+          disabled={isPending}
+        >
+          {isPending && <Loader2 className="animate-spin" />}
+          <FaRegSquareCheck className="text-lg" /> Complete Editing
         </Button>
       </div>
       <div className="wizard-box w-full flex rounded-2xl border-[1px] border-gray-300 mt-6 overflow-hidden">
         <div className="basis-2/3 p-4 overflow-y-scroll flex items-center justify-center min-h-full">
           <div className="w-full max-w-[600px] mx-auto bg-gray-50 px-4 py-8 rounded-lg">
             <h1 className="text-header text-xl font-semibold uppercase text-center">
-              {inputFields.title || "form title"}
+              {inputFields.title || texts?.title || "form title"}
             </h1>
             <p className="text-center my-4">
-              {inputFields.subtitle || "Form Subtitle"}
+              {inputFields.subtitle || texts?.subtitle || "Form Subtitle"}
             </p>
             {checkFields.fullName && (
               <label className="block mb-2">
@@ -227,7 +239,7 @@ export default function FormWizard() {
             )}
 
             <Button disabled className="w-full uppercase bg-accent-clr">
-              {inputFields.btnText || "call me now"}
+              {texts?.btnText || inputFields.btnText || "call me now"}
             </Button>
           </div>
         </div>
@@ -245,6 +257,7 @@ export default function FormWizard() {
                   className="h-8"
                   id={text.id}
                   name={text.name}
+                  defaultValue={texts[text.name]}
                   onChange={(e) =>
                     setInputFields((prev) => ({
                       ...prev,
@@ -271,6 +284,7 @@ export default function FormWizard() {
                   name={check.name}
                   id={check.id}
                   defaultChecked={
+                    fields[check.name] ||
                     checkFields[check.name as keyof typeof checkFields]
                   }
                   onChange={(e) =>
@@ -300,6 +314,7 @@ export default function FormWizard() {
                   name={color.name}
                   id={color.id}
                   defaultValue={
+                    styles[color.name] ||
                     colorFields[color.name as keyof typeof colorFields]
                   }
                   onChange={(e) =>

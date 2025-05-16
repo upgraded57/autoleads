@@ -29,7 +29,10 @@ export default function Campaign() {
   const answeredLeads =
     data?.leads &&
     data?.leads.filter((el: any) => {
-      return el.contacted_status.toLowerCase() === "answered";
+      return (
+        el.contacted_status.toLowerCase() === "answered" ||
+        el.contacted_status.toLowerCase() === "converted"
+      );
     });
 
   return (

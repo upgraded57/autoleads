@@ -11,7 +11,7 @@ import { Input } from "./ui/input";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { launchCampaign } from "@/api/campaign";
+import { launchCampaign, UseDeleteCampaign } from "@/api/campaign";
 import { HiDotsVertical } from "react-icons/hi";
 import { copyCodeAsInline, copyCodeAsPopup } from "@/utils/Codes";
 import {
@@ -20,12 +20,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CampaignsTableProps } from "@/utils/Types.dto";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CampaignsTable({ data }: CampaignsTableProps) {
   const [q, setQ] = useSearchParams({
     type: "",
     value: "",
   });
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState(data);
 
@@ -65,10 +68,24 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
     };
 
     filerCampaigns();
-  }, [q]);
+  }, [q, data]);
 
   const viewCampaign = (id: string) => {
     navigate(`/app/campaigns/${id}`);
+  };
+
+  const { mutateAsync: deleteCampaign, isPending: isDeletingCampaign } =
+    UseDeleteCampaign();
+  const handleDeleteCampaign = (id: string) => {
+    const toastId = toast.loading("Deleting Campaign");
+    deleteCampaign(id)
+      .then(() => {
+        toast.success("Campaign deleted successfully", { id: toastId });
+        queryClient.invalidateQueries();
+      })
+      .catch(() => {
+        toast.error("Unable to delete campaign", { id: toastId });
+      });
   };
 
   return (
@@ -136,25 +153,38 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                 {campaign.converted_leads}
               </TableCell>
               <TableCell>
-                {campaign.type_of.toLowerCase() === "upload" ? (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="rounded-full text-xs h-auto py-1 px-3"
-                    onClick={() => launchCampaign(campaign.id)}
-                  >
-                    Launch Campaign
-                  </Button>
-                ) : (
-                  <Popover>
-                    <PopoverTrigger className="h-auto p-2 w-auto rounded-md text-inherit hover:bg-gray-200">
+                <Popover>
+                  <PopoverTrigger>
+                    <Button size="sm" variant="ghost" className="my-2">
                       <HiDotsVertical />
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto flex flex-col gap-2">
+                    </Button>
+                  </PopoverTrigger>
+                  {campaign.type_of.toLowerCase() === "upload" ? (
+                    <PopoverContent className="flex flex-col gap-3 w-max">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="rounded-full text-xs h-auto py-1 px-3"
+                        className="rounded"
+                        onClick={() => launchCampaign(campaign.id)}
+                      >
+                        Launch Campaign
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="rounded"
+                        disabled={isDeletingCampaign}
+                        onClick={() => handleDeleteCampaign(campaign.id)}
+                      >
+                        Delete Campaign
+                      </Button>{" "}
+                    </PopoverContent>
+                  ) : (
+                    <PopoverContent className="flex flex-col gap-3 w-max">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded"
                         onClick={() => copyCodeAsPopup(campaign.id)}
                       >
                         Copy code as popup
@@ -162,7 +192,7 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="rounded-full text-xs h-auto py-1 px-3"
+                        className="rounded"
                         onClick={() => copyCodeAsInline(campaign.id)}
                       >
                         Copy code inline form
@@ -170,13 +200,35 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="rounded-full text-xs h-auto py-1 px-3"
+                        className="rounded"
+                        onClick={() => {
+                          navigate(`/campaigns/form/edit/${campaign.id}`);
+                        }}
                       >
-                        Edit form
+                        Edit Form
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded"
+                        onClick={() => {
+                          navigate(`/campaigns/edit/${campaign.id}`);
+                        }}
+                      >
+                        Edit Context
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="rounded"
+                        disabled={isDeletingCampaign}
+                        onClick={() => handleDeleteCampaign(campaign.id)}
+                      >
+                        Delete Campaign
                       </Button>
                     </PopoverContent>
-                  </Popover>
-                )}
+                  )}
+                </Popover>
               </TableCell>
             </TableRow>
           ))}

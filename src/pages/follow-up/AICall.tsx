@@ -1,63 +1,130 @@
 import { addCampaignContext } from "@/api/campaign";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useParams } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 export default function AICall() {
   const navigate = useNavigate();
-  const { campaign_id, type } = useParams();
+  const { campaign_id } = useParams();
+  const [q] = useSearchParams();
+  const type = q.get("type");
 
   const chooseAICall = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
     addCampaignContext(data, campaign_id, navigate, type);
   };
+
   return (
     <>
       <Logo />
-      <div className="flex flex-col items-center justify-center w-[450px] mx-auto">
-        <div>
-          <h1 className="text-header text-2xl font-medium">AI Calls</h1>
+      <div className="flex flex-col items-center justify-center mx-auto pb-10">
+        <div className="w-full max-w-screen-lg">
+          <h1 className="text-header text-2xl font-medium">Campaign Context</h1>
           <p className="text-sm">
             Enter the context and goal of the campaign. The more descriptive you
             are, the better as AI will rely on the context provide for
             conversation with your customers.
           </p>
           <form
-            className="rounded-2xl bg-white p-4 mt-5"
+            className="rounded-lg shadow bg-white p-10 mt-5"
             onSubmit={chooseAICall}
           >
-            <div>
-              <p className="text-sm">
-                Enter the details of the campaign. This may include the campaign
-                name and information of the campaign
-              </p>
-              <textarea
-                placeholder="Campaign Details"
-                className="w-full border rounded-md p-2 resize-none outline-offset-[4px] text-sm font-normal mt-2"
-                name="campaign_details"
-                rows={5}
-                required
-                maxLength={5000}
-              />
-            </div>
-            <div className="mt-6 mb-2">
-              <p className="text-sm">
-                Enter the goal of the campaign. This is the purpose of the
-                campaign
-              </p>
-              <textarea
-                placeholder="Campaign Goals"
-                className="w-full border rounded-md p-2 resize-none outline-offset-[4px] text-sm font-normal mt-2"
-                name="campaign_goal"
-                rows={5}
-                maxLength={5000}
+            <label htmlFor="product_name" className="block mb-4 w-full">
+              <p className="text-sm">Product Name</p>
+              <Input
+                type="text"
+                id="product_name"
+                name="product_name"
+                placeholder="e.g. Primeclick Marketing"
                 required
               />
+            </label>
+            <label htmlFor="product_description" className="block mb-4 w-full">
+              <p className="text-sm">Product Description</p>
+              <Input
+                type="text"
+                id="product_description"
+                name="product_description"
+                placeholder="e.g. Digital Marketing at its best"
+                required
+              />
+            </label>
+
+            <label htmlFor="product_pricing" className="block mb-4">
+              <p className="text-sm">Product Pricing</p>
+              <Textarea id="product_pricing" name="product_pricing" required />
+            </label>
+            <label htmlFor="faqs" className="block mb-4">
+              <p className="text-sm">Frequently asked Questions</p>
+              <Textarea id="faqs" name="faqs" required />
+            </label>
+
+            <label
+              htmlFor="product_offer_or_call_to_action"
+              className="block mb-4 w-full"
+            >
+              <p className="text-sm">Product Offer or Call to Action</p>
+              <Input
+                type="text"
+                id="product_offer_or_call_to_action"
+                name="product_offer_or_call_to_action"
+                placeholder="e.g. Digital Marketing at its best"
+                required
+              />
+            </label>
+            <label htmlFor="company_information" className="block mb-4 w-full">
+              <p className="text-sm">Company Information</p>
+              <Input
+                type="text"
+                id="company_information"
+                name="company_information"
+                placeholder="e.g. company name, company address, company contact information"
+                required
+              />
+            </label>
+
+            <div className="flex flex-col lg:flex-row gap-0 lg:gap-2 items-end">
+              <label
+                htmlFor="most_important_information"
+                className="block mb-4 w-full"
+              >
+                <p className="text-sm">Most Important Information</p>
+                <Input
+                  type="text"
+                  id="most_important_information"
+                  name="most_important_information"
+                  placeholder="e.g. the most important information to be emphasized during the call"
+                  required
+                />
+              </label>
+              <label
+                htmlFor="campaign_goal"
+                className="block mb-4 w-full lg:w-max"
+              >
+                <p className="text-sm lg:mb-1">Campaign Goal</p>
+                <Select name="campaign_goal" required>
+                  <SelectTrigger className="w-full lg:w-[300px]">
+                    <SelectValue placeholder="Select Campaign Goal" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Get Feedback">Get Feedback</SelectItem>
+                  </SelectContent>
+                </Select>
+              </label>
             </div>
 
-            <Button className="pry-btn w-full" type="submit">
-              Continue
+            <Button className="pry-btn w-max" type="submit">
+              Submit Campaign Context
             </Button>
           </form>
         </div>

@@ -253,18 +253,23 @@ export default function CampaignTable({
                   </span>
                 </TableCell>
                 <TableCell className="playPause">
-                  <select
-                    className="playPause bg-transparent outline-hidden"
-                    onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
-                    disabled={isUpdatingQuality}
-                    value={lead.lead_quality || "Pending"}
+                  <Button
+                    variant="ghost"
+                    className="border-[1px] border-transparent hover:border-gray-200 my-2"
                   >
-                    <option value="Pending" disabled>
-                      Pending
-                    </option>
-                    <option value="Good">Good Lead</option>
-                    <option value="Bad">Bad Lead</option>
-                  </select>
+                    <select
+                      className="playPause py-2 bg-transparent outline-hidden"
+                      onChange={(e) => handleUpdateLeadQuality(e, lead.id)}
+                      disabled={isUpdatingQuality}
+                      value={lead.lead_quality || "Pending"}
+                    >
+                      <option value="Pending" disabled>
+                        Pending
+                      </option>
+                      <option value="Good">Good Lead</option>
+                      <option value="Bad">Bad Lead</option>
+                    </select>
+                  </Button>
                 </TableCell>
                 <TableCell>
                   {lead.recording_url ? (

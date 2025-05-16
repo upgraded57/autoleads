@@ -42,7 +42,7 @@ export default function RecentActivities() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {logs?.map((log: any, idx: number) => (
+              {logs?.map((log: Record<string, string>, idx: number) => (
                 <TableRow key={idx}>
                   <TableCell>{log?.action.toLowerCase()}</TableCell>
                   <TableCell className="min-w-[160px]">

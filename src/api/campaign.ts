@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from "react-hot-toast";
 import { axiosInstance } from "./axiosInstance";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseURL } from "./baseUrl";
 import { NavigateFunction } from "react-router-dom";
@@ -245,7 +246,7 @@ export const addCampaignContext = async (
   form: FormData,
   campaign_id: string | undefined,
   navigate: NavigateFunction,
-  type: string | undefined
+  type: string | null
 ) => {
   const toastId = toast.loading("Assigning context to calls");
 
@@ -262,6 +263,27 @@ export const addCampaignContext = async (
     .catch(() => {
       toast.error("Something went wrong. Please retry", { id: toastId });
     });
+};
+
+// get campaign contenxt
+export const useGetCampaignContext = (campaign_id: string) => {
+  const getContext = async () => {
+    const res = await axiosInstance.get(`/campaign/${campaign_id}/`);
+    return res.data;
+  };
+
+  return useQuery({
+    queryKey: ["Campaign", campaign_id],
+    queryFn: getContext,
+  });
+};
+
+// get campaign contenxt
+export const useUpdateCampaignContext = () => {
+  return useMutation({
+    mutationFn: (data: { campaign_id: string; data: Record<string, string> }) =>
+      axiosInstance.put(`/campaign/${data.campaign_id}/`, data.data),
+  });
 };
 
 // launch campaign
@@ -360,4 +382,32 @@ export const updateLeadQuality = async (
       toast.error("Unable to update lead quality", { id: toastId });
     })
     .finally(() => setIsLoading(false));
+};
+
+export const UseDeleteCampaign = () => {
+  return useMutation({
+    mutationFn: (campaignId: string) =>
+      axiosInstance.delete(`/campaign/${campaignId}`),
+  });
+};
+
+export const useGetFormDesign = (campaign_id: string) => {
+  const getDesign = async () => {
+    const res = await axiosInstance.get(`/campaign/form-design/${campaign_id}`);
+    return res.data;
+  };
+
+  return useQuery({
+    queryKey: ["Form Design"],
+    queryFn: getDesign,
+  });
+};
+
+export const useEditDesign = () => {
+  return useMutation({
+    mutationFn: (data: { campaign_id: string; design: any }) =>
+      axiosInstance.put(`/campaign/form-design/${data.campaign_id}/update/`, {
+        design: JSON.stringify(data.design),
+      }),
+  });
 };
