@@ -253,7 +253,7 @@ export const addCampaignContext = async (
   await axiosInstance
     .put(`campaign/call/create/${campaign_id}/`, form)
     .then(() => {
-      toast.success("Audios assigned to calls", { id: toastId });
+      toast.success("Campaign context added successfully", { id: toastId });
       if (type === "upload" || type === "sheet") {
         navigate("/app/campaigns");
       } else {

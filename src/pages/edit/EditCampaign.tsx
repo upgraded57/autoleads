@@ -143,6 +143,7 @@ export default function EditCampaign() {
                     name="most_important_information"
                     placeholder="e.g. the most important information to be emphasized during the call"
                     defaultValue={data?.most_important_information}
+                    required
                   />
                 </label>
                 <label

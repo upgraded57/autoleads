@@ -46,7 +46,6 @@ export default function AICall() {
                 id="product_name"
                 name="product_name"
                 placeholder="e.g. Primeclick Marketing"
-                required
               />
             </label>
             <label htmlFor="product_description" className="block mb-4 w-full">
@@ -56,17 +55,16 @@ export default function AICall() {
                 id="product_description"
                 name="product_description"
                 placeholder="e.g. Digital Marketing at its best"
-                required
               />
             </label>
 
             <label htmlFor="product_pricing" className="block mb-4">
               <p className="text-sm">Product Pricing</p>
-              <Textarea id="product_pricing" name="product_pricing" required />
+              <Textarea id="product_pricing" name="product_pricing" />
             </label>
             <label htmlFor="faqs" className="block mb-4">
               <p className="text-sm">Frequently asked Questions</p>
-              <Textarea id="faqs" name="faqs" required />
+              <Textarea id="faqs" name="faqs" />
             </label>
 
             <label
@@ -79,7 +77,6 @@ export default function AICall() {
                 id="product_offer_or_call_to_action"
                 name="product_offer_or_call_to_action"
                 placeholder="e.g. Digital Marketing at its best"
-                required
               />
             </label>
             <label htmlFor="company_information" className="block mb-4 w-full">
@@ -89,7 +86,6 @@ export default function AICall() {
                 id="company_information"
                 name="company_information"
                 placeholder="e.g. company name, company address, company contact information"
-                required
               />
             </label>
 
@@ -112,7 +108,7 @@ export default function AICall() {
                 className="block mb-4 w-full lg:w-max"
               >
                 <p className="text-sm lg:mb-1">Campaign Goal</p>
-                <Select name="campaign_goal" required>
+                <Select name="campaign_goal">
                   <SelectTrigger className="w-full lg:w-[300px]">
                     <SelectValue placeholder="Select Campaign Goal" />
                   </SelectTrigger>
