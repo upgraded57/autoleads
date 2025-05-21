@@ -411,3 +411,10 @@ export const useEditDesign = () => {
       }),
   });
 };
+
+export const useResetCampaign = () => {
+  return useMutation({
+    mutationFn: (campaign_id: string) =>
+      axiosInstance.delete(`/campaign/${campaign_id}/delete-leads/`),
+  });
+};

@@ -7,11 +7,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Input } from "./ui/input";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { launchCampaign, UseDeleteCampaign } from "@/api/campaign";
+import {
+  launchCampaign,
+  UseDeleteCampaign,
+  useResetCampaign,
+} from "@/api/campaign";
 import { HiDotsVertical } from "react-icons/hi";
 import { copyCodeAsInline, copyCodeAsPopup } from "@/utils/Codes";
 import {
@@ -22,12 +36,15 @@ import {
 import { CampaignsTableProps } from "@/utils/Types.dto";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 
 export default function CampaignsTable({ data }: CampaignsTableProps) {
   const [q, setQ] = useSearchParams({
     type: "",
     value: "",
   });
+  const [openModal, setOpenModal] = useState(false);
+  const [currentId, setCurrentId] = useState("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState(data);
@@ -170,6 +187,18 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                         Launch Campaign
                       </Button>
                       <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
+                        disabled={isDeletingCampaign}
+                        onClick={() => {
+                          setCurrentId(campaign.id);
+                          setOpenModal(true);
+                        }}
+                      >
+                        Reset Campaign
+                      </Button>
+                      <Button
                         variant="destructive"
                         size="sm"
                         className="rounded"
@@ -218,6 +247,18 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
                         Edit Context
                       </Button>
                       <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
+                        disabled={isDeletingCampaign}
+                        onClick={() => {
+                          setCurrentId(campaign.id);
+                          setOpenModal(true);
+                        }}
+                      >
+                        Reset Campaign
+                      </Button>
+                      <Button
                         variant="destructive"
                         size="sm"
                         className="rounded"
@@ -234,6 +275,81 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
           ))}
         </TableBody>
       </Table>
+      <ResetModal
+        open={openModal}
+        setIsOpen={setOpenModal}
+        id={currentId}
+        setCurrentId={setCurrentId}
+      />
     </div>
   );
 }
+
+const ResetModal = ({
+  open,
+  setIsOpen,
+  id,
+  setCurrentId,
+}: {
+  open: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentId: React.Dispatch<React.SetStateAction<string>>;
+  id: string;
+}) => {
+  const { mutateAsync: resetCampaign, isPending } = useResetCampaign();
+  const handleResetCampaign = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (!id) return;
+    const toastId = toast.loading("Resetting campaign data", {
+      id: "resetToast",
+    });
+    resetCampaign(id)
+      .then(() => {
+        toast.success("Campaign data reset successfully", { id: toastId });
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message || "Unable to reset campaign data",
+          {
+            id: toastId,
+          }
+        );
+      });
+  };
+  return (
+    <AlertDialog
+      open={open}
+      onOpenChange={
+        isPending
+          ? () => {}
+          : () => {
+              setIsOpen(false);
+              setCurrentId("");
+            }
+      }
+    >
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Reset Campaign?</AlertDialogTitle>
+          <AlertDialogDescription className="py-4">
+            This action cannot be undone. This will permanently delete all the
+            leads in the campaign. Do you still wish to proceed?
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction
+            className="mr-2 bg-destructive text-white hover:bg-destructive/90"
+            onClick={handleResetCampaign}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="animate-spin" />}
+            Yes, Reset Campaign
+          </AlertDialogAction>
+          <AlertDialogCancel disabled={isPending}>No, Cancel</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};

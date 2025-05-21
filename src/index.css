@@ -118,78 +118,78 @@ layer(base);
   *::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.4);
   }
+}
 
-  body {
-    background: var(--body-clr);
-    color: var(--text-clr);
-    font-family: "DM Sans", sans-serif;
-  }
+body {
+  background: var(--body-clr);
+  color: var(--text-clr);
+  font-family: "DM Sans", sans-serif;
+}
 
-  button {
-    font-family: "IBM Plex Sans", sans-serif;
-  }
+button {
+  font-family: "IBM Plex Sans", sans-serif;
+}
 
-  select {
-    font-weight: normal !important;
-  }
+select {
+  font-weight: normal !important;
+}
 
-  .navLinks.active {
-    background: var(--pry-clr);
-    color: white;
-  }
+.navLinks.active {
+  background: var(--pry-clr);
+  color: white;
+}
 
-  .navLinks.active:hover {
-    color: white;
-    transform: translateX(0);
-  }
+.navLinks.active:hover {
+  color: white;
+  transform: translateX(0);
+}
 
-  .text-header {
-    font-family: "IBM Plex Sans", sans-serif;
-  }
+.text-header {
+  font-family: "IBM Plex Sans", sans-serif;
+}
 
-  .icon {
-    font-size: 20px;
-  }
+.icon {
+  font-size: 20px;
+}
 
-  .pry-btn {
-    background: var(--pry-clr);
-    color: white;
-  }
+.pry-btn {
+  background: var(--pry-clr);
+  color: white;
+}
 
-  .pry-btn:hover {
-    background: var(--pry-dark-clr) !important;
-    color: white;
-  }
+.pry-btn:hover {
+  background: var(--pry-dark-clr) !important;
+  color: white;
+}
 
-  .outline-btn {
-    background: transparent;
-    color: inherit;
-  }
+.outline-btn {
+  background: transparent;
+  color: inherit;
+}
 
-  .pry-btn:hover {
-    background: var(--pry-dark-clr) !important;
-    color: white;
-  }
+.pry-btn:hover {
+  background: var(--pry-dark-clr) !important;
+  color: white;
+}
 
-  .wizard-box {
-    max-height: calc(100vh - 180px);
-    overflow: hidden;
-  }
+.wizard-box {
+  max-height: calc(100vh - 180px);
+  overflow: hidden;
+}
 
-  .verify-otp {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: url("./assets/verifyOtpBg.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.verify-otp {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("./assets/verifyOtpBg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  p {
-    font-size: 16px;
-  }
+p {
+  font-size: 16px;
 }
 
 @layer base {

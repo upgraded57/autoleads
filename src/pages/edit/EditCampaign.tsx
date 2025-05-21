@@ -131,28 +131,36 @@ export default function EditCampaign() {
                 />
               </label>
 
+              <label
+                htmlFor="most_important_information"
+                className="block mb-4 w-full"
+              >
+                <p className="text-sm">Most Important Information</p>
+                <Input
+                  type="text"
+                  id="most_important_information"
+                  name="most_important_information"
+                  placeholder="e.g. the most important information to be emphasized during the call"
+                  defaultValue={data?.most_important_information}
+                  required
+                />
+              </label>
+
               <div className="flex flex-col lg:flex-row gap-0 lg:gap-2 items-end">
-                <label
-                  htmlFor="most_important_information"
-                  className="block mb-4 w-full"
-                >
-                  <p className="text-sm">Most Important Information</p>
+                <label htmlFor="client_url" className="block mb-4 w-full">
+                  <p className="text-sm">Client URL</p>
                   <Input
                     type="text"
-                    id="most_important_information"
-                    name="most_important_information"
-                    placeholder="e.g. the most important information to be emphasized during the call"
-                    defaultValue={data?.most_important_information}
+                    id="client_url"
+                    name="client_url"
+                    placeholder="e.g. https://autoleads.primeclickmedia.com"
                     required
                   />
                 </label>
-                <label
-                  htmlFor="campaign_goal"
-                  className="block mb-4 w-full lg:w-max"
-                >
+                <label htmlFor="campaign_goal" className="block mb-4 w-full">
                   <p className="text-sm lg:mb-1">Campaign Goal</p>
                   <Select name="campaign_goal">
-                    <SelectTrigger className="w-full lg:w-[300px]">
+                    <SelectTrigger className="w-full">
                       <SelectValue
                         placeholder={
                           data?.campaign_goal || "Select Campaign Goal"
@@ -172,7 +180,7 @@ export default function EditCampaign() {
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="animate-spin" />}
-                Edit Campaign Context
+                Save Context
               </Button>
             </form>
           </div>

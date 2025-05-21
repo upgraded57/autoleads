@@ -89,27 +89,35 @@ export default function AICall() {
               />
             </label>
 
+            <label
+              htmlFor="most_important_information"
+              className="block mb-4 w-full"
+            >
+              <p className="text-sm">Most Important Information</p>
+              <Input
+                type="text"
+                id="most_important_information"
+                name="most_important_information"
+                placeholder="e.g. the most important information to be emphasized during the call"
+                required
+              />
+            </label>
+
             <div className="flex flex-col lg:flex-row gap-0 lg:gap-2 items-end">
-              <label
-                htmlFor="most_important_information"
-                className="block mb-4 w-full"
-              >
-                <p className="text-sm">Most Important Information</p>
+              <label htmlFor="client_url" className="block mb-4 w-full">
+                <p className="text-sm">Client URL</p>
                 <Input
                   type="text"
-                  id="most_important_information"
-                  name="most_important_information"
-                  placeholder="e.g. the most important information to be emphasized during the call"
+                  id="client_url"
+                  name="client_url"
+                  placeholder="e.g. https://autoleads.primeclickmedia.com"
                   required
                 />
               </label>
-              <label
-                htmlFor="campaign_goal"
-                className="block mb-4 w-full lg:w-max"
-              >
-                <p className="text-sm lg:mb-1">Campaign Goal</p>
+              <label htmlFor="campaign_goal" className="block mb-4 w-full">
+                <p className="text-sm">Campaign Goal</p>
                 <Select name="campaign_goal">
-                  <SelectTrigger className="w-full lg:w-[300px]">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Campaign Goal" />
                   </SelectTrigger>
                   <SelectContent>
@@ -120,7 +128,7 @@ export default function AICall() {
             </div>
 
             <Button className="pry-btn w-max" type="submit">
-              Submit Campaign Context
+              Save Context
             </Button>
           </form>
         </div>
