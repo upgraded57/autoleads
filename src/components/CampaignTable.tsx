@@ -10,11 +10,11 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Input } from "./ui/input";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CampaignTableProps, LeadProps } from "@/utils/Types.dto";
 import { exportFile } from "@/utils/Export";
 import { CampaignShareModal } from "./CampaignShareModal";
-import { IoPlayCircle } from "react-icons/io5";
+import { IoPlayCircle, IoStopCircle } from "react-icons/io5";
 import toast from "react-hot-toast";
 import moment from "moment";
 import { updateLeadQuality } from "@/api/campaign";
@@ -30,6 +30,9 @@ export default function CampaignTable({
 }: CampaignTableProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentAudioUrl, setCurrentAudioUrl] = useState("");
 
   const [q, setQ] = useSearchParams({
     status: "",
@@ -128,16 +131,49 @@ export default function CampaignTable({
     }
   };
 
+  const audio = useRef<HTMLAudioElement>(new Audio());
+
   const handlePlayPause = (lead: LeadProps["lead"]) => {
-    const audio = new Audio(lead.recording_url!);
+    if (!lead.recording_url) return;
+
+    // Stop currently playing audio
+    if (isPlaying) {
+      stopAudio();
+    }
+
+    if (currentAudioUrl === lead.recording_url) {
+      audio.current.pause();
+      setCurrentAudioUrl("");
+      return;
+    }
+
+    audio.current.src = lead.recording_url;
     const toastId = toast.loading("Loading recording...", {
       id: "audioToast",
     });
 
-    audio.oncanplaythrough = () => {
+    audio.current.oncanplaythrough = () => {
       toast.success("Now playing recording", { id: toastId });
-      audio.play();
+      audio.current.play();
     };
+
+    audio.current.onplaying = () => {
+      setIsPlaying(true);
+      setCurrentAudioUrl(lead.recording_url!);
+    };
+
+    audio.current.onended = () => {
+      setIsPlaying(false);
+      setCurrentAudioUrl("");
+    };
+  };
+
+  const stopAudio = () => {
+    audio.current.pause();
+    audio.current.currentTime = 0;
+    audio.current.src = "";
+    setIsPlaying(false);
+    setCurrentAudioUrl("");
   };
 
   const [isUpdatingQuality, setIsUpdatingQuality] = useState(false);
@@ -275,9 +311,15 @@ export default function CampaignTable({
                   {lead.recording_url ? (
                     <span
                       className="playPause cursor-pointer"
-                      onClick={() => handlePlayPause(lead)}
+                      onClick={() => {
+                        handlePlayPause(lead);
+                      }}
                     >
-                      <IoPlayCircle className=" text-2xl text-pry-clr pointer-events-none" />
+                      {isPlaying && currentAudioUrl === lead.recording_url ? (
+                        <IoStopCircle className=" text-2xl text-pry-clr pointer-events-none" />
+                      ) : (
+                        <IoPlayCircle className=" text-2xl text-accent-clr pointer-events-none" />
+                      )}
                     </span>
                   ) : (
                     "N/A"

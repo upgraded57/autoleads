@@ -75,6 +75,7 @@ export default function EditCampaign() {
                   name="product_name"
                   placeholder="e.g. Primeclick Marketing"
                   defaultValue={data?.product_name}
+                  required
                 />
               </label>
               <label
@@ -88,6 +89,7 @@ export default function EditCampaign() {
                   name="product_description"
                   placeholder="e.g. Digital Marketing at its best"
                   defaultValue={data?.product_description}
+                  required
                 />
               </label>
 
@@ -97,6 +99,7 @@ export default function EditCampaign() {
                   id="product_pricing"
                   name="product_pricing"
                   defaultValue={data?.product_pricing}
+                  required
                 />
               </label>
               <label htmlFor="faqs" className="block mb-4">
@@ -115,6 +118,7 @@ export default function EditCampaign() {
                   name="product_offer_or_call_to_action"
                   placeholder="e.g. Digital Marketing at its best"
                   defaultValue={data?.product_offer_or_call_to_action}
+                  required
                 />
               </label>
               <label
@@ -128,6 +132,7 @@ export default function EditCampaign() {
                   name="company_information"
                   placeholder="e.g. company name, company address, company contact information"
                   defaultValue={data?.company_information}
+                  required
                 />
               </label>
 
@@ -159,7 +164,7 @@ export default function EditCampaign() {
                 </label>
                 <label htmlFor="campaign_goal" className="block mb-4 w-full">
                   <p className="text-sm lg:mb-1">Campaign Goal</p>
-                  <Select name="campaign_goal">
+                  <Select name="campaign_goal" required>
                     <SelectTrigger className="w-full">
                       <SelectValue
                         placeholder={
