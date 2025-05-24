@@ -10,14 +10,14 @@ import { SuspenseFallback } from "@/utils/Routes";
 export default function DashboardLayout() {
   return (
     <div className="flex items-start gap-5 py-3 pl-5 h-screen overflow-y-hidden">
-      <div className="lg:basis-2/12 h-full bg-white rounded-xl p-4">
+      <div className="w-[60px] lg:min-w-[250px] lg:max-w-[250px] h-full bg-white rounded-xl p-4">
         <div className="w-6 lg:w-[90%] mx-auto mb-10">
           <img src={logo} alt="autoleads" className="hidden lg:block w-full" />
           <img src={logoSm} alt="autoleads" className="lg:hidden w-full" />
         </div>
         <DashboardLinks />
       </div>
-      <div className="flex-1 h-full overflow-scroll pr-5">
+      <div className="h-full w-full overflow-scroll pr-5">
         <UserProvider>
           <ProtectedRoutes>
             <Suspense fallback={<SuspenseFallback />}>

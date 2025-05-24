@@ -32,10 +32,14 @@ export default function User() {
           <div className="grid grid-cols-2 gap-10 items-center">
             <span>
               <h3 className="text-xl font-[500]">Public Profile</h3>
-              <p>This will be displayed on your Profile</p>
+              <p className="text-sm">This will be displayed on your Profile</p>
             </span>
             <span>
-              <Input type="text" placeholder="company name" />
+              <Input
+                type="text"
+                placeholder="company name"
+                defaultValue={user.first_name + " " + user?.last_name}
+              />
             </span>
           </div>
         </div>
@@ -45,7 +49,7 @@ export default function User() {
           <div className="grid grid-cols-2 gap-10 items-center">
             <span>
               <h3 className="text-xl font-[500]">Company Logo</h3>
-              <p>
+              <p className="text-sm">
                 Update your company logo and choose where you want it to be
                 displayed
               </p>
@@ -61,10 +65,14 @@ export default function User() {
           <div className="grid grid-cols-2 gap-10 items-center">
             <span>
               <h3 className="text-xl font-[500]">Registered Email</h3>
-              <p>This will be displayed on your Profile</p>
+              <p className="text-sm">This will be displayed on your Profile</p>
             </span>
             <span>
-              <Input type="email" placeholder="email address" />
+              <Input
+                type="email"
+                placeholder="email address"
+                defaultValue={user.email}
+              />
             </span>
           </div>
         </div>

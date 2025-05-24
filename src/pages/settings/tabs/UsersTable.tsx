@@ -93,7 +93,7 @@ export default function UsersTable({ users }: UserProps) {
                 <PopoverTrigger className="h-auto p-2 w-auto rounded-md text-inherit hover:bg-gray-200">
                   <HiDotsVertical />
                 </PopoverTrigger>
-                <PopoverContent className="bg-white rounded-md p-2 flex flex-col gap-2 border-[1px] border-neutral-light-clr max-w-max">
+                <PopoverContent className="bg-white rounded-md flex flex-col gap-2 max-w-max">
                   <Button
                     variant="outline"
                     size="sm"

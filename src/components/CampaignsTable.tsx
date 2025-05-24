@@ -17,6 +17,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "./ui/input";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import moment from "moment";
@@ -27,7 +34,7 @@ import {
   useResetCampaign,
 } from "@/api/campaign";
 import { HiDotsVertical } from "react-icons/hi";
-import { copyCodeAsInline, copyCodeAsPopup } from "@/utils/Codes";
+import { copyCodeAsInline, copyCodeAsPopup, copyUrl } from "@/utils/Codes";
 import {
   Popover,
   PopoverContent,
@@ -39,10 +46,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
 export default function CampaignsTable({ data }: CampaignsTableProps) {
-  const [q, setQ] = useSearchParams({
-    type: "",
-    value: "",
-  });
+  const [q, setQ] = useSearchParams();
   const [openModal, setOpenModal] = useState(false);
   const [currentId, setCurrentId] = useState("");
   const queryClient = useQueryClient();
@@ -72,6 +76,7 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
         if (!filterValue && searchValue) {
           return el.title.toLowerCase().includes(searchValue.toLowerCase());
         } else if (!searchValue && filterValue) {
+          if (filterValue === "all") return el;
           return filterValue.toLowerCase() === el.type_of.toLowerCase();
         } else if (searchValue && filterValue) {
           return (
@@ -109,18 +114,25 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
     <div>
       <div className="w-full flex justify-between items-center mb-6">
         <div className="basis-1/4 flex items-center gap-2">
-          <p className="">Filter by:</p>
-          <Button variant="outline" className="p-0 h-auto">
-            <select
-              className="bg-transparent outline-hidden h-10 px-2"
-              onChange={(e) => setFilter("type", e.target.value)}
-              defaultValue={q.get("type") ?? ""}
-            >
-              <option value="">All Types</option>
-              <option value="direct">Direct</option>
-              <option value="upload">Upload</option>
-            </select>
-          </Button>
+          <p className="text-sm">Filter by:</p>
+          <Select onValueChange={(val) => setFilter("type", val)}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue
+                placeholder={
+                  q.get("type") === "direct"
+                    ? "Direct"
+                    : q.get("type") === "upload"
+                    ? "Upload"
+                    : "All Types"
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Types</SelectItem>
+              <SelectItem value="direct">Direct</SelectItem>
+              <SelectItem value="upload">Upload</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <Input
@@ -136,9 +148,9 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
-            <TableHead>Title</TableHead>
+            <TableHead className="min-w-[200px]">Title</TableHead>
             <TableHead>Leads</TableHead>
-            <TableHead>Created At</TableHead>
+            <TableHead className="min-w-[200px]">Created At</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Contacted</TableHead>
             <TableHead>Converted</TableHead>
@@ -146,133 +158,157 @@ export default function CampaignsTable({ data }: CampaignsTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {campaigns?.map((campaign) => (
-            <TableRow key={campaign.id}>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.id}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.title}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.leads}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {moment(campaign.created).format("MMM DD, YYYY hh:mm")}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.type_of}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.contacted_leads}
-              </TableCell>
-              <TableCell onClick={() => viewCampaign(campaign.id)}>
-                {campaign.converted_leads}
-              </TableCell>
-              <TableCell>
-                <Popover>
-                  <PopoverTrigger>
-                    <Button size="sm" variant="ghost" className="my-2">
-                      <HiDotsVertical />
-                    </Button>
-                  </PopoverTrigger>
-                  {campaign.type_of.toLowerCase() === "upload" ? (
-                    <PopoverContent className="flex flex-col gap-3 w-max">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded"
-                        onClick={() => launchCampaign(campaign.id)}
-                      >
-                        Launch Campaign
+          {campaigns?.length > 0 ? (
+            campaigns?.map((campaign) => (
+              <TableRow key={campaign.id}>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.id}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.title}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.leads}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {moment(campaign.created).format("MMM DD, YYYY hh:mm")}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.type_of}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.contacted_leads}
+                </TableCell>
+                <TableCell onClick={() => viewCampaign(campaign.id)}>
+                  {campaign.converted_leads}
+                </TableCell>
+                <TableCell>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Button size="sm" variant="ghost" className="my-2">
+                        <HiDotsVertical />
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
-                        disabled={isDeletingCampaign}
-                        onClick={() => {
-                          setCurrentId(campaign.id);
-                          setOpenModal(true);
-                        }}
-                      >
-                        Reset Campaign
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="rounded"
-                        disabled={isDeletingCampaign}
-                        onClick={() => handleDeleteCampaign(campaign.id)}
-                      >
-                        Delete Campaign
-                      </Button>{" "}
-                    </PopoverContent>
-                  ) : (
-                    <PopoverContent className="flex flex-col gap-3 w-max">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded"
-                        onClick={() => copyCodeAsPopup(campaign.id)}
-                      >
-                        Copy code as popup
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded"
-                        onClick={() => copyCodeAsInline(campaign.id)}
-                      >
-                        Copy code inline form
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded"
-                        onClick={() => {
-                          navigate(`/campaigns/form/edit/${campaign.id}`);
-                        }}
-                      >
-                        Edit Form
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded"
-                        onClick={() => {
-                          navigate(`/campaigns/edit/${campaign.id}`);
-                        }}
-                      >
-                        Edit Context
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
-                        disabled={isDeletingCampaign}
-                        onClick={() => {
-                          setCurrentId(campaign.id);
-                          setOpenModal(true);
-                        }}
-                      >
-                        Reset Campaign
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="rounded"
-                        disabled={isDeletingCampaign}
-                        onClick={() => handleDeleteCampaign(campaign.id)}
-                      >
-                        Delete Campaign
-                      </Button>
-                    </PopoverContent>
-                  )}
-                </Popover>
+                    </PopoverTrigger>
+                    {campaign.type_of.toLowerCase() === "upload" ? (
+                      <PopoverContent className="flex flex-col gap-3 w-max">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => launchCampaign(campaign.id)}
+                        >
+                          Launch Campaign
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => copyUrl(campaign.id)}
+                        >
+                          Copy URL
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
+                          disabled={isDeletingCampaign}
+                          onClick={() => {
+                            setCurrentId(campaign.id);
+                            setOpenModal(true);
+                          }}
+                        >
+                          Reset Campaign
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="rounded"
+                          disabled={isDeletingCampaign}
+                          onClick={() => handleDeleteCampaign(campaign.id)}
+                        >
+                          Delete Campaign
+                        </Button>{" "}
+                      </PopoverContent>
+                    ) : (
+                      <PopoverContent className="flex flex-col gap-3 w-max">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => copyCodeAsPopup(campaign.id)}
+                        >
+                          Copy code as popup
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => copyCodeAsInline(campaign.id)}
+                        >
+                          Copy code inline form
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => copyUrl(campaign.id)}
+                        >
+                          Copy URL
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => {
+                            navigate(`/campaigns/form/edit/${campaign.id}`);
+                          }}
+                        >
+                          Edit Form
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded"
+                          onClick={() => {
+                            navigate(`/campaigns/edit/${campaign.id}`);
+                          }}
+                        >
+                          Edit Context
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded border-destructive text-destructive hover:bg-destructive hover:text-white"
+                          disabled={isDeletingCampaign}
+                          onClick={() => {
+                            setCurrentId(campaign.id);
+                            setOpenModal(true);
+                          }}
+                        >
+                          Reset Campaign
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="rounded"
+                          disabled={isDeletingCampaign}
+                          onClick={() => handleDeleteCampaign(campaign.id)}
+                        >
+                          Delete Campaign
+                        </Button>
+                      </PopoverContent>
+                    )}
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow className="hover:bg-transparent">
+              <TableCell colSpan={8} className="text-center h-[300px]">
+                Your filter did not return any lead!
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
       <ResetModal

@@ -39,16 +39,31 @@ export default function AICall() {
             className="rounded-lg shadow bg-white p-10 mt-5"
             onSubmit={chooseAICall}
           >
-            <label htmlFor="product_name" className="block mb-4 w-full">
-              <p className="text-sm">Product Name</p>
-              <Input
-                type="text"
-                id="product_name"
-                name="product_name"
-                placeholder="e.g. Primeclick Marketing"
-                required
-              />
-            </label>
+            <div className="flex flex-col lg:flex-row gap-0 lg:gap-2 items-end">
+              <label htmlFor="product_name" className="block mb-4 w-full">
+                <p className="text-sm">Product Name</p>
+                <Input
+                  type="text"
+                  id="product_name"
+                  name="product_name"
+                  placeholder="e.g. Primeclick Marketing"
+                  required
+                />
+              </label>
+              <label
+                htmlFor="product_offer_or_call_to_action"
+                className="block mb-4 w-full"
+              >
+                <p className="text-sm">Product Offer or Call to Action</p>
+                <Input
+                  type="text"
+                  id="product_offer_or_call_to_action"
+                  name="product_offer_or_call_to_action"
+                  placeholder="e.g. Digital Marketing at its best"
+                  required
+                />
+              </label>
+            </div>
             <label htmlFor="product_description" className="block mb-4 w-full">
               <p className="text-sm">Product Description</p>
               <Input
@@ -69,23 +84,9 @@ export default function AICall() {
               <Textarea id="faqs" name="faqs" />
             </label>
 
-            <label
-              htmlFor="product_offer_or_call_to_action"
-              className="block mb-4 w-full"
-            >
-              <p className="text-sm">Product Offer or Call to Action</p>
-              <Input
-                type="text"
-                id="product_offer_or_call_to_action"
-                name="product_offer_or_call_to_action"
-                placeholder="e.g. Digital Marketing at its best"
-                required
-              />
-            </label>
             <label htmlFor="company_information" className="block mb-4 w-full">
               <p className="text-sm">Company Information</p>
-              <Input
-                type="text"
+              <Textarea
                 id="company_information"
                 name="company_information"
                 placeholder="e.g. company name, company address, company contact information"
@@ -104,6 +105,16 @@ export default function AICall() {
                 name="most_important_information"
                 placeholder="e.g. the most important information to be emphasized during the call"
                 required
+              />
+            </label>
+
+            <label htmlFor="sales_team_email" className="block mb-4 w-full">
+              <p className="text-sm">Sales Team Email Address</p>
+              <Input
+                type="email"
+                id="sales_team_email"
+                name="sales_team_email"
+                placeholder="e.g. autoleads@primeclick.com"
               />
             </label>
 
